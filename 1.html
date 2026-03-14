@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedConnect Ride Booking</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Segoe UI, Arial;
+background:#eef9fd;
+}
+
+/* header */
+.header{
+background:white;
+padding:18px 40px;
+box-shadow:0 4px 18px rgba(0,0,0,0.05);
+font-weight:600;
+font-size:20px;
+}
+
+/* container */
+.container{
+max-width:900px;
+margin:auto;
+padding:40px;
+}
+
+/* appointment card */
+.card{
+background:white;
+padding:25px;
+border-radius:16px;
+box-shadow:0 10px 30px rgba(0,0,0,0.05);
+}
+
+button{
+background:#18a7b8;
+border:none;
+padding:13px 22px;
+color:white;
+border-radius:10px;
+cursor:pointer;
+font-size:15px;
+}
+
+button:hover{
+background:#0f8c9b;
+}
+
+/* bottom sheet */
+.ride-sheet{
+position:fixed;
+bottom:-100%;
+left:0;
+right:0;
+background:white;
+border-radius:28px 28px 0 0;
+padding:25px;
+box-shadow:0 -12px 40px rgba(0,0,0,0.2);
+transition:0.45s ease;
+max-height:85vh;
+overflow:auto;
+}
+
+.ride-sheet.show{
+bottom:0;
+}
+
+/* locations */
+.location{
+background:#f3fbff;
+padding:14px;
+border-radius:12px;
+margin-bottom:10px;
+}
+
+/* ride cards */
+.ride-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:14px;
+margin-top:15px;
+}
+
+.ride-card{
+background:#f8fdff;
+border:1px solid #e3f2f7;
+padding:15px;
+border-radius:12px;
+cursor:pointer;
+text-align:center;
+}
+
+.ride-card:hover{
+background:#e9fbff;
+transform:translateY(-4px);
+}
+
+.ride-card img{
+width:45px;
+margin-bottom:8px;
+}
+
+.price{
+font-weight:700;
+color:#18a7b8;
+}
+
+/* map */
+.map{
+height:220px;
+margin-top:15px;
+border-radius:14px;
+overflow:hidden;
+}
+
+/* confirm */
+.confirm-btn{
+width:100%;
+margin-top:18px;
+padding:14px;
+font-size:16px;
+}
+
+/* distance */
+.distance{
+margin-top:8px;
+font-weight:600;
+color:#444;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">MedConnect</div>
+
+<div class="container">
+
+<div class="card">
+<h2>Doctor Appointment</h2>
+<p><b>Doctor:</b> Dr. Mehta</p>
+<p><b>Hospital:</b> Parul Hospital</p>
+<p><b>Time:</b> 5:00 PM Today</p>
+
+<button onclick="openRide()">Confirm Appointment</button>
+</div>
+
+</div>
+
+<!-- ride sheet -->
+<div class="ride-sheet" id="rideSheet">
+
+<h2>Choose Your Ride</h2>
+
+<div class="location">
+Pickup: <span id="pickup">Detecting your location...</span>
+</div>
+
+<div class="location">
+Destination: Parul Hospital
+</div>
+
+<div class="distance">
+Distance: <span id="distance">Calculating...</span>
+</div>
+
+<div class="ride-grid">
+
+<div class="ride-card" onclick="selectRide('Bike')">
+<img src="https://img.icons8.com/color/96/motorcycle.png">
+<div>Bike</div>
+<div class="price" id="bikePrice">--</div>
+</div>
+
+<div class="ride-card" onclick="selectRide('Auto')">
+<img src="https://img.icons8.com/color/96/auto-rickshaw.png">
+<div>Auto</div>
+<div class="price" id="autoPrice">--</div>
+</div>
+
+<div class="ride-card" onclick="selectRide('Cab')">
+<img src="https://img.icons8.com/color/96/taxi.png">
+<div>Cab</div>
+<div class="price" id="cabPrice">--</div>
+</div>
+
+</div>
+
+<div class="map">
+<iframe
+width="100%"
+height="100%"
+src="https://maps.google.com/maps?q=parul hospital&t=&z=13&ie=UTF8&iwloc=&output=embed">
+</iframe>
+</div>
+
+<button class="confirm-btn" onclick="confirmRide()">Book Ride</button>
+
+</div>
+
+<script>
+
+let distanceKm = 0;
+let selectedRide = "";
+
+function openRide(){
+
+document.getElementById("rideSheet").classList.add("show");
+
+/* detect location */
+if(navigator.geolocation){
+
+navigator.geolocation.getCurrentPosition(function(pos){
+
+let lat = pos.coords.latitude;
+let lon = pos.coords.longitude;
+
+document.getElementById("pickup").innerText =
+"Your Location (Lat: " + lat.toFixed(3) + ", Lon: " + lon.toFixed(3) + ")";
+
+/* simulated accurate distance near parul area */
+distanceKm = (Math.random()*4 + 2).toFixed(1);
+
+document.getElementById("distance").innerText =
+distanceKm + " km";
+
+calculateFare();
+
+});
+
+}
+}
+
+function calculateFare(){
+
+let bike = Math.round(distanceKm * 18 + 20);
+let auto = Math.round(distanceKm * 25 + 30);
+let cab = Math.round(distanceKm * 40 + 50);
+
+document.getElementById("bikePrice").innerText = "₹ " + bike;
+document.getElementById("autoPrice").innerText = "₹ " + auto;
+document.getElementById("cabPrice").innerText = "₹ " + cab;
+
+}
+
+function selectRide(type){
+selectedRide = type;
+
+document.querySelectorAll(".ride-card").forEach(card=>{
+card.style.border="1px solid #e3f2f7";
+});
+
+event.currentTarget.style.border="2px solid #18a7b8";
+}
+
+function confirmRide(){
+
+if(selectedRide===""){
+alert("Please select ride option");
+return;
+}
+
+alert(selectedRide + " booked successfully");
+
+}
+
+</script>
+
+</body>
+</html>

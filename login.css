@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --bg-body: #f4f9fc;
+    --bg-card: #ffffff;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --accent: #1aa6b7;
+    --accent-hover: #1593a1;
+    --border: #e2e8f0;
+    --input-bg: #f8fafc;
+}
+
+[data-theme="dark"] {
+    --bg-body: #05161d;
+    --bg-card: #0a242d;
+    --text-main: #e0f2f7;
+    --text-muted: #94a3b8;
+    --accent: #26d0ce;
+    --accent-hover: #1aa6b7;
+    --border: #163a45;
+    --input-bg: #0d2e39;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    transition: all 0.3s ease;
+    min-height: 100vh;
+}
+
+/* NAV */
+.login-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+}
+
+.logo-text { font-size: 22px; font-weight: 700; color: var(--accent); }
+.logo-text span { color: var(--text-main); }
+
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    background: var(--input-bg);
+    padding: 8px 16px;
+    border-radius: 20px;
+}
+
+/* CONTAINER */
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.login-container {
+    background: var(--bg-card);
+    width: 100%;
+    max-width: 450px;
+    padding: 50px;
+    border-radius: 28px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+    border: 1px solid var(--border);
+    text-align: center;
+}
+
+.brand-badge {
+    display: inline-block;
+    background: rgba(26, 166, 187, 0.1);
+    color: var(--accent);
+    padding: 5px 15px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.header-section h1 { font-size: 28px; margin: 0; }
+.header-section p { color: var(--text-muted); font-size: 15px; margin-top: 10px; }
+
+/* ROLE GRID */
+.role-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.role-card {
+    background: var(--input-bg);
+    padding: 20px 10px;
+    border-radius: 18px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: 0.3s;
+}
+
+.role-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-5px);
+    background: var(--bg-card);
+}
+
+.role-icon { font-size: 24px; margin-bottom: 8px; }
+.role-name { display: block; font-weight: 600; font-size: 13px; }
+.role-desc { font-size: 9px; color: var(--text-muted); margin-top: 4px; }
+
+/* FORM */
+.form-header { margin-bottom: 30px; }
+.form-header h3 { font-size: 24px; margin: 0; color: var(--accent); }
+.form-header p { color: var(--text-muted); font-size: 14px; }
+
+.input-group { text-align: left; margin-bottom: 20px; }
+.input-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+.input-group input {
+    width: 100%;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1.5px solid var(--border);
+    background: var(--input-bg);
+    color: var(--text-main);
+    box-sizing: border-box;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(26, 166, 187, 0.1);
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 16px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background: var(--accent-hover);
+    box-shadow: 0 8px 20px rgba(26, 166, 187, 0.3);
+}
+
+.footer-links { margin-top: 25px; }
+.footer-links a { color: var(--accent); text-decoration: none; font-weight: 600; }
+.btn-link {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    margin-top: 15px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* ANIMATIONS */
+@keyframes fadeInSlide {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.fade-in-form { animation: fadeInSlide 0.5s ease-out; }
+
+@media (max-width: 500px) {
+    .role-grid { grid-template-columns: 1fr; }
+    .login-container { padding: 30px; }
+}

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>24/7 Patient Care & Support | MedConnect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text-main: #0f172a;
+            --text-sub: #64748b;
+            --accent: #1aa6b7;
+            --border: #e2e8f0;
+            --emergency-bg: #fff1f2;
+            --emergency-text: #be123c;
+            --success: #10b981;
+        }
+
+        [data-theme="dark"] {
+            --bg: #020617;
+            --card: #0f172a;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --accent: #38bdf8;
+            --border: #1e293b;
+            --emergency-bg: #450a0a;
+            --emergency-text: #fecaca;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            line-height: 1.7;
+            transition: 0.3s ease;
+        }
+
+        /* NAVIGATION */
+        nav {
+            padding: 20px 60px;
+            background: var(--card);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        .nav-links a { text-decoration: none; color: var(--text-sub); margin-left: 30px; font-weight: 600; font-size: 14px; }
+
+        /* HERO SECTION */
+        .hero-support {
+            padding: 80px 20px;
+            text-align: center;
+            background: linear-gradient(to bottom, var(--card), transparent);
+        }
+
+        .hero-support h1 { font-size: 56px; font-weight: 800; letter-spacing: -2px; margin-bottom: 20px; }
+        .hero-support p { font-size: 20px; color: var(--text-sub); max-width: 800px; margin: 0 auto; }
+
+        /* SITUATION SELECTOR (NEW SECTION) */
+        .situations-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 0 20px;
+        }
+
+        .situation-box {
+            background: var(--card);
+            padding: 30px;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+        }
+
+        .situation-box:hover { border-color: var(--accent); transform: translateY(-5px); }
+        .situation-box h3 { margin: 15px 0 10px; font-size: 20px; color: var(--accent); }
+
+        /* EMERGENCY STRIP (MODERN) */
+        .emergency-banner {
+            max-width: 1200px;
+            margin: 60px auto;
+            background: var(--emergency-bg);
+            border: 2px solid var(--emergency-text);
+            border-radius: 30px;
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 20px 40px rgba(190, 18, 60, 0.1);
+        }
+
+        .emergency-btn {
+            background: #be123c;
+            color: white;
+            padding: 20px 45px;
+            border-radius: 18px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* DETAILED CONTENT SECTION */
+        .info-section {
+            max-width: 1000px;
+            margin: 100px auto;
+            padding: 0 20px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-top: 50px;
+        }
+
+        .info-card h2 { font-size: 32px; font-weight: 800; margin-bottom: 25px; }
+        .step { display: flex; gap: 20px; margin-bottom: 30px; }
+        .step-num { 
+            min-width: 40px; height: 40px; background: var(--accent); color: white; 
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800;
+        }
+
+        /* MEGA FOOTER */
+        footer {
+            background: var(--card);
+            border-top: 1px solid var(--border);
+            padding: 100px 60px 40px;
+            margin-top: 100px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-col h4 { margin-bottom: 25px; font-weight: 800; color: white; }
+        .footer-col ul { list-style: none; padding: 0; }
+        .footer-col li { margin-bottom: 15px; color: white; cursor: pointer; transition: 0.2s; }
+        .footer-col li:hover { color: white; padding-left: 5px; }
+
+    </style>
+</head>
+<body>
+
+<nav>
+    <div style="font-size: 26px; font-weight: 800; color: var(--accent);">MedConnect</div>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="faq.html">FAQs</a>
+        <a href="support.html" style="color:var(--accent)">Support Center</a>
+        <button onclick="toggleTheme()" id="themeBtn" style="background:none; border:none; cursor:pointer; font-size: 20px; margin-left: 20px;">🌙</button>
+    </div>
+</nav>
+
+<section class="hero-support">
+    <h1>We're here to help, <br>whenever you need us.</h1>
+    <p>Healthcare can be confusing. Whether you are looking for a doctor, booking a MedCab, or need help with a bill, our team is ready to assist you in simple words.</p>
+</section>
+
+<div class="situations-container">
+    <div class="situation-box">
+        <span style="font-size: 40px;">💊</span>
+        <h3>Medicines & Prescriptions</h3>
+        <p>Need help understanding your digital prescription or ordering medicines? We can guide you.</p>
+    </div>
+    <div class="situation-box">
+        <span style="font-size: 40px;">👨‍⚕️</span>
+        <h3>Doctor Availability</h3>
+        <p>If your doctor hasn't joined the call or the clinic is closed, tell us immediately.</p>
+    </div>
+    <div class="situation-box">
+        <span style="font-size: 40px;">🚑</span>
+        <h3>MedCab Tracking</h3>
+        <p>Driver not moving? Want to change your destination hospital? Our logistics team is active.</p>
+    </div>
+    <div class="situation-box">
+        <span style="font-size: 40px;">💰</span>
+        <h3>Payment & Refunds</h3>
+        <p>Failed payments or refund status—get clear answers without the technical jargon.</p>
+    </div>
+</div>
+
+<div class="emergency-banner">
+    <div style="max-width: 600px;">
+        <h2 style="margin: 0; font-size: 32px; color: var(--emergency-text);">Critical Emergency?</h2>
+        <p style="margin: 10px 0 0 0; font-size: 18px; color: var(--text-sub);">If someone's life is at risk, please do not wait for a chat reply. Our Emergency Dispatch is ready to send a MedCab Prime within minutes.</p>
+    </div>
+    <a href="tel:108" class="emergency-btn">Call Emergency 108</a>
+</div>
+
+<div class="info-section">
+    <div class="info-grid">
+        <div class="info-card">
+            <h2>How to get help fast?</h2>
+            <div class="step">
+                <div class="step-num">1</div>
+                <div>
+                    <h4 style="margin:0">Identify the issue</h4>
+                    <p style="margin:5px 0; color:var(--text-sub)">Is it about a doctor, a cab, or a payment? Choosing the right category speeds up the process.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <div>
+                    <h4 style="margin:0">Have details ready</h4>
+                    <p style="margin:5px 0; color:var(--text-sub)">Keep your Booking ID or Patient Name ready. This helps us find your record in 5 seconds.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <div>
+                    <h4 style="margin:0">Start a Live Chat</h4>
+                    <p style="margin:5px 0; color:var(--text-sub)">Click the chat icon at the bottom. Our real human agents (not bots) will talk to you.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-card" style="background: var(--card); padding: 40px; border-radius: 30px; border: 1px solid var(--border);">
+            <h3 style="margin-top:0">Common Situations</h3>
+            <ul style="padding-left: 20px; color: var(--text-sub);">
+                <li style="margin-bottom: 15px;"><b>"I am at the hospital but the doctor is busy."</b> <br> Our team can talk to the hospital desk for you.</li>
+                <li style="margin-bottom: 15px;"><b>"My MedCab driver is taking a long route."</b> <br> We monitor every ride live. We will call the driver.</li>
+                <li style="margin-bottom: 15px;"><b>"I paid twice by mistake."</b> <br> Don't worry. The extra amount will be back in 24 hours.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div style="max-width: 1200px; margin: 0 auto 100px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; padding: 0 20px;">
+    <div style="text-align: center; background: var(--card); padding: 40px; border-radius: 30px; border: 1px solid var(--border);">
+        <div style="font-size: 40px; margin-bottom: 15px;">💬</div>
+        <h3>Live Support</h3>
+        <p style="color: var(--text-sub);">Best for quick questions about your current booking.</p>
+        <button style="background: var(--accent); color: white; border: none; padding: 12px 30px; border-radius: 10px; font-weight: 700; cursor: pointer;">Start Chat</button>
+    </div>
+    <div style="text-align: center; background: var(--card); padding: 40px; border-radius: 30px; border: 1px solid var(--border);">
+        <div style="font-size: 40px; margin-bottom: 15px;">📞</div>
+        <h3>Call Us</h3>
+        <p style="color: var(--text-sub);">Speak directly to a Patient Care Manager anytime.</p>
+        <h3 style="color: var(--accent);">1800-400-500</h3>
+    </div>
+    <div style="text-align: center; background: var(--card); padding: 40px; border-radius: 30px; border: 1px solid var(--border);">
+        <div style="font-size: 40px; margin-bottom: 15px;">✉️</div>
+        <h3>Email Desk</h3>
+        <p style="color: var(--text-sub);">Best for sending medical reports or formal feedback.</p>
+        <h4 style="color: var(--accent);">care@medconnect.com</h4>
+    </div>
+</div>
+
+<footer class="site-footer">
+    <div style="max-width: 1300px; margin: 0 auto; padding: 0 40px;">
+        
+        <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 60px;">
+            
+            <div>
+                <div style="font-size: 30px; font-weight: 800; color: var(--accent); margin-bottom: 20px;">MedConnect™</div>
+                <p style="color: var(--text-sub); font-size: 15px; line-height: 1.8; margin-bottom: 25px;">
+                    India's premier healthcare bridge. We simplify complex medical journeys through technology and 24/7 empathetic support.
+                </p>
+                <div style="display: flex; gap: 10px;">
+                    <span style="font-size: 10px; font-weight: 800; color: var(--text-sub); border: 1px solid var(--border); padding: 5px 10px; border-radius: 6px;">ISO 27001</span>
+                    <span style="font-size: 10px; font-weight: 800; color: var(--text-sub); border: 1px solid var(--border); padding: 5px 10px; border-radius: 6px;">HIPAA COMPLIANT</span>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="footer-heading">Services</h4>
+                <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2.5;">
+                    <li><a class="footer-link">Find Specialists</a></li>
+                    <li><a class="footer-link">Emergency MedCab</a></li>
+                    <li><a class="footer-link">Home Nursing</a></li>
+                    <li><a class="footer-link">Lab Tests & MRI</a></li>
+                    <li><a class="footer-link">Insurance Claims</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footer-heading">Corporate</h4>
+                <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2.5;">
+                    <li><a class="footer-link">About Us</a></li>
+                    <li><a class="footer-link">Privacy & Data</a></li>
+                    <li><a class="footer-link">Terms of Service</a></li>
+                    <li><a class="footer-link">Refund Policy</a></li>
+                    <li><a class="footer-link">Careers</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footer-heading">Get the App</h4>
+                
+                <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px;">
+                    <div style="background: #000000; color: #ffffff; padding: 10px 18px; border-radius: 12px; display: flex; align-items: center; gap: 12px; cursor: pointer; width: 180px; border: 1px solid #333;">
+                        <span style="font-size: 24px;"></span>
+                        <div style="line-height: 1;">
+                            <span style="font-size: 10px; display: block; opacity: 0.8;">Download on the</span>
+                            <span style="font-size: 15px; font-weight: 700;">App Store</span>
+                        </div>
+                    </div>
+                    <div style="background: #000000; color: #ffffff; padding: 10px 18px; border-radius: 12px; display: flex; align-items: center; gap: 12px; cursor: pointer; width: 180px; border: 1px solid #333;">
+                        <span style="font-size: 20px;">🌐</span>
+                        <div style="line-height: 1;">
+                            <span style="font-size: 10px; display: block; opacity: 0.8;">Get it on</span>
+                            <span style="font-size: 15px; font-weight: 700;">Google Play</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 20px;">
+                    <a href="#" style="text-decoration: none; color: #1DA1F2; font-size: 18px; font-weight: 800;">X</a>
+                    <a href="#" style="text-decoration: none; color: #E1306C; font-size: 18px; font-weight: 800;">IG</a>
+                    <a href="#" style="text-decoration: none; color: #0077B5; font-size: 18px; font-weight: 800;">IN</a>
+                    <a href="#" style="text-decoration: none; color: #FF0000; font-size: 18px; font-weight: 800;">YT</a>
+                </div>
+            </div>
+        </div>
+
+        <div style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 25px 0; margin-bottom: 30px; text-align: center;">
+            <p style="font-size: 12px; color: var(--text-sub); letter-spacing: 0.8px; margin: 0; font-weight: 600;">
+                OPERATIONAL IN: MUMBAI • DELHI NCR • BENGALURU • HYDERABAD • CHENNAI • KOLKATA • PUNE • JAIPUR • LUCKNOW
+            </p>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; color: var(--text-sub); font-size: 13px;">
+            <div>© 2026 MedConnect Healthcare Private Limited.</div>
+            <div style="display: flex; gap: 25px;">
+                <span class="footer-link" style="font-size: 12px;">Cyber Security</span>
+                <span class="footer-link" style="font-size: 12px;">Sitemap</span>
+                <span class="footer-link" style="font-size: 12px;">Patient Rights</span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    function toggleTheme() {
+        const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', current);
+        localStorage.setItem('theme', current);
+        document.getElementById('themeBtn').innerHTML = current === 'dark' ? '☀️' : '🌙';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        document.getElementById('themeBtn').innerHTML = savedTheme === 'dark' ? '☀️' : '🌙';
+    });
+</script>
+
+</body>
+</html>

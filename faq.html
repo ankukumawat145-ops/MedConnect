@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support & FAQs | MedConnect</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text-main: #01040d;
+    --text-sub: #64748b;
+    --accent: #1aa6b7;
+    --border: #e2e8f0;
+}
+
+[data-theme="dark"] {
+    --bg: #0b0f1a;
+    --card: #161b2a;
+    --text-main: #f1f5f9;
+    --text-sub: #94a3b8;
+    --accent: #38bdf8;
+    --border: #2d364d;
+}
+
+body {
+    margin: 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text-main);
+    transition: 0.3s ease;
+}
+
+/* NAVBAR (Same as Main Page) */
+nav {
+    padding: 25px 60px;
+    background: var(--card);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 1000;
+}
+
+.nav-links { display: flex; align-items: center; }
+.nav-links a { text-decoration: none; color: var(--text-sub); margin-left: 30px; font-weight: 600; font-size: 14px; transition: 0.3s; }
+.nav-links a:hover { color: var(--accent); }
+
+/* FAQ CONTAINER */
+.faq-container {
+    max-width: 800px;
+    margin: 80px auto;
+    padding: 0 20px;
+}
+
+.faq-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.faq-header h1 { font-size: 40px; font-weight: 800; margin-bottom: 10px; }
+.faq-header p { color: var(--text-sub); font-size: 18px; }
+
+/* ACCORDION DESIGN */
+.faq-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    transition: 0.3s ease;
+}
+
+.faq-question {
+    padding: 25px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.answer-content {
+    padding: 0 30px 30px 30px;
+    color: var(--text-sub);
+    line-height: 1.8;
+}
+
+.answer-content ul { padding-left: 20px; margin: 0; list-style: none; }
+.answer-content li { margin-bottom: 10px; position: relative; }
+.answer-content li::before { content: "•"; color: var(--accent); font-weight: bold; position: absolute; left: -15px; }
+
+.faq-item.active {
+    border-color: var(--accent);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.faq-item.active .faq-question { color: var(--accent); }
+
+.icon {
+    width: 20px; height: 20px; position: relative;
+}
+.icon::before, .icon::after {
+    content: ''; position: absolute; background: var(--text-sub); transition: 0.3s;
+}
+.icon::before { width: 100%; height: 2px; top: 50%; transform: translateY(-50%); }
+.icon::after { width: 2px; height: 100%; left: 50%; transform: translateX(-50%); }
+
+.faq-item.active .icon { transform: rotate(45deg); }
+.faq-item.active .icon::before, .faq-item.active .icon::after { background: var(--accent); }
+
+</style>
+</head>
+<body>
+
+<nav>
+    <div style="font-size: 26px; font-weight: 800; color:#1aa6b7">MedConnect</div>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="doctor.html">Doctors</a>
+        <a href="support.html" style="color: var(--accent)">Help Center</a>
+        <button onclick="toggleTheme()" style="background:none; border:none; cursor:pointer; margin-left:30px; font-size: 20px;" id="themeBtn">🌓</button>
+    </div>
+</nav>
+
+<div class="faq-container">
+    <div class="faq-header">
+        <h1>Frequently Asked Questions</h1>
+        <p>Expert answers to your medical registry and transport queries.</p>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">Verification: How do we trust the doctors? <div class="icon"></div></div>
+        <div class="faq-answer"><div class="answer-content"><ul>
+            <li>Manual verification of MCI/NMC registration numbers.</li>
+            <li>Direct background checks with AIIMS, Apollo, etc.</li>
+            <li>Verified badge for only document-verified professionals.</li>
+        </ul></div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">MedCab: Arrival time and tracking?<div class="icon"></div></div>
+        <div class="faq-answer"><div class="answer-content"><ul>
+            <li>Average arrival time is 4-8 minutes in urban areas.</li>
+            <li>Live GPS tracking enabled for accurate location.</li>
+            <li>Direct communication link with the driver.</li>
+        </ul></div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">Payments: Any hidden clinical charges?<div class="icon"></div></div>
+        <div class="faq-answer"><div class="answer-content"><ul>
+            <li>Zero hidden fees; transparency is our priority.</li>
+            <li>Consultation fee includes registration at the clinic.</li>
+            <li>Invoices generated instantly after booking.</li>
+        </ul></div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">Privacy: Is my data end-to-end encrypted?<div class="icon"></div></div>
+        <div class="faq-answer"><div class="answer-content"><ul>
+            <li>Compliant with HIPAA and Indian Data Protection Acts.</li>
+            <li>Encrypted medical reports accessible only by your doctor.</li>
+            <li>Secure cloud storage for all patient records.</li>
+        </ul></div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">MedCab Prime: Oxygen and BLS Support?<div class="icon"></div></div>
+        <div class="faq-answer"><div class="answer-content"><ul>
+            <li>Certified medical-grade oxygen cylinders available.</li>
+            <li>Trained paramedics for Basic Life Support during transit.</li>
+            <li>Standard medical kits in every MedCab vehicle.</li>
+        </ul></div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">Cancellation: How to get a refund?<div class="icon"></div></div>
+        <div class="faq-answer"><div class="answer-content"><ul>
+            <li>Full refund if cancelled 12 hours before slot.</li>
+            <li>Instant refund to MedConnect Wallet on failed bookings.</li>
+            <li>3-5 days for bank account transfers.</li>
+        </ul></div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">Tele-Health: How to start video call?<div class="icon"></div></div>
+        <div class="faq-answer"><div class="answer-content"><ul>
+            <li>Access 'My Bookings' and click 'Join Call'.</li>
+            <li>Encrypted video link sent 10 mins before time.</li>
+            <li>Digital prescription available post-consultation.</li>
+        </ul></div></div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question">Support: What if the doctor is not at clinic?<div class="icon"></div></div>
+        <div class="faq-answer"><div class="answer-content"><ul>
+            <li>Report instantly through the 'Help' button.</li>
+            <li>Free rescheduling or full immediate refund.</li>
+            <li>24/7 dedicated patient support line.</li>
+        </ul></div></div>
+    </div>
+
+</div>
+
+<script>
+    // THEME LOGIC (Matches Main Page)
+    function toggleTheme() {
+        const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', current);
+        localStorage.setItem('theme', current);
+        document.getElementById('themeBtn').innerHTML = current === 'dark' ? '☀️' : '🌙';
+    }
+
+    // ACCORDION LOGIC
+    document.querySelectorAll('.faq-question').forEach(item => {
+        item.addEventListener('click', () => {
+            const parent = item.parentElement;
+            const isOpen = parent.classList.contains('active');
+            
+            document.querySelectorAll('.faq-item').forEach(child => {
+                child.classList.remove('active');
+                child.querySelector('.faq-answer').style.maxHeight = null;
+            });
+
+            if (!isOpen) {
+                parent.classList.add('active');
+                const answer = parent.querySelector('.faq-answer');
+                answer.style.maxHeight = answer.scrollHeight + "px";
+            }
+        });
+    });
+
+    // AUTO LOAD THEME
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        document.getElementById('themeBtn').innerHTML = savedTheme === 'dark' ? '☀️' : '🌙';
+    });
+</script>
+
+</body>
+</html>

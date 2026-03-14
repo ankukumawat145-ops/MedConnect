@@ -1,0 +1,178 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="register.css">
+    <title>Join MedConnect | Healthcare Network</title>
+</head>
+<body>
+
+<nav class="reg-nav">
+    <div class="logo">Med<span>Connect</span></div>
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <span id="theme-text">Dark Mode</span>
+        <div class="toggle-icon" id="theme-icon">🌙</div>
+    </div>
+</nav>
+
+<div class="reg-wrapper">
+    <div class="reg-container fade-in">
+        
+        <div id="header-part" class="reg-header">
+            <div class="brand-badge">Medical Network</div>
+            <h2>Create Your Account</h2>
+            <p>Select your profile type to get started with MedConnect</p>
+        </div>
+
+        <div id="role-selection-area">
+            <div class="role-grid">
+                <div class="role-card" onclick="startRegistration('patient')">
+                    <div class="icon">👤</div>
+                    <span class="role-name">Patient</span>
+                    <p class="role-desc">For personal health care</p>
+                </div>
+                <div class="role-card" onclick="startRegistration('doctor')">
+                    <div class="icon">🩺</div>
+                    <span class="role-name">Doctor</span>
+                    <p class="role-desc">For medical practitioners</p>
+                </div>
+                <div class="role-card" onclick="startRegistration('hospital')">
+                    <div class="icon">🏢</div>
+                    <span class="role-name">Hospital</span>
+                    <p class="role-desc">For clinics & centers</p>
+                </div>
+            </div>
+            <p class="login-footer">Already a member? <a href="login.html">Sign In Now</a></p>
+        </div>
+
+        <form id="main-form" style="display: none;" action="login.html" class="fade-in-form">
+            <div class="form-title-area">
+                <h3 id="dynamic-title">Profile Details</h3>
+                <p>Please fill in the authentic information below</p>
+            </div>
+
+            <div class="input-container">
+                <div class="input-group">
+                    <label>Full Name / Title</label>
+                    <input type="text" placeholder="e.g. Dr. Jane Smith" required>
+                </div>
+                
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="name@example.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" placeholder="••••••••" required>
+                </div>
+
+                <div id="p-sec" style="display: none;" class="role-specific-content">
+                    <div class="grid-2">
+                        <div class="input-group">
+                            <label>Age</label>
+                            <input type="number" placeholder="25">
+                        </div>
+                        <div class="input-group">
+                            <label>Blood Group</label>
+                            <input type="text" placeholder="O+">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Medical History</label>
+                        <textarea placeholder="List any allergies or chronic conditions..."></textarea>
+                    </div>
+                </div>
+
+                <div id="d-sec" style="display: none;" class="role-specific-content">
+                    <div class="input-group">
+                        <label>Specialization</label>
+                        <input type="text" placeholder="e.g. Neurologist">
+                    </div>
+                    <div class="grid-2">
+                        <div class="input-group">
+                            <label>License No.</label>
+                            <input type="text" placeholder="MCI-XXXXX">
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <div id="h-sec" style="display: none;" class="role-specific-content">
+                    <div class="input-group">
+                        <label>Registration ID</label>
+                        <input type="text" placeholder="HOSP-9921">
+                    </div>
+                    <div class="input-group">
+                        <label>Bed Capacity</label>
+                        <input type="number" placeholder="150">
+                    </div>
+                    <div class="input-group">
+                        <label>Physical Address</label>
+                        <textarea placeholder="Complete address with city & pincode..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-primary-reg">Complete Registration</button>
+            <button type="button" class="btn-link" onclick="location.reload()">← Change Account Type</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function startRegistration(role) {
+        document.getElementById('role-selection-area').style.display = 'none';
+        document.getElementById('header-part').style.display = 'none';
+        const form = document.getElementById('main-form');
+        form.style.display = 'block';
+
+        // Reset
+        document.getElementById('p-sec').style.display = 'none';
+        document.getElementById('d-sec').style.display = 'none';
+        document.getElementById('h-sec').style.display = 'none';
+
+        if(role === 'patient') {
+            document.getElementById('p-sec').style.display = 'block';
+            document.getElementById('dynamic-title').innerText = "Patient Registration";
+        } else if(role === 'doctor') {
+            document.getElementById('d-sec').style.display = 'block';
+            document.getElementById('dynamic-title').innerText = "Doctor Onboarding";
+        } else if(role === 'hospital') {
+            document.getElementById('h-sec').style.display = 'block';
+            document.getElementById('dynamic-title').innerText = "Hospital Registration";
+        }
+    }
+
+    // Theme Logic
+    function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        const text = document.getElementById('theme-text');
+        const icon = document.getElementById('theme-icon');
+        
+        if(theme === 'dark') {
+            text.innerText = "Light Mode";
+            icon.innerText = "☀️";
+        } else {
+            text.innerText = "Dark Mode";
+            icon.innerText = "🌙";
+        }
+    }
+
+    function toggleTheme() {
+        const current = localStorage.getItem('theme') || 'light';
+        applyTheme(current === 'light' ? 'dark' : 'light');
+    }
+
+    window.onload = () => {
+        applyTheme(localStorage.getItem('theme') || 'light');
+    }
+</script>
+</body>
+</html>

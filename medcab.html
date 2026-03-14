@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedConnect Elite | Professional Enterprise</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #1aa6b7;
+            --primary-dark: #127a87;
+            --accent: #00f2ff;
+            --bg-body: #f1f5f9;
+            --glass: rgba(255, 255, 255, 0.9);
+            --card-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        body, html { 
+            margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; 
+            height: 100%; overflow: hidden; background: var(--bg-body); color: #1e293b;
+        }
+
+        .app-container { display: flex; height: 100vh; width: 100vw; }
+
+        /* ----- PREMIUM SIDEBAR ----- */
+        .sidebar {
+            width: 440px; background: var(--glass); backdrop-filter: blur(15px);
+            border-right: 1px solid rgba(0,0,0,0.05); z-index: 1000;
+            display: flex; flex-direction: column; padding: 40px; box-sizing: border-box;
+            box-shadow: 10px 0 50px rgba(0,0,0,0.05);
+        }
+
+        .logo-section { margin-bottom: 45px; }
+        .logo-section h1 { 
+            font-size: 26px; font-weight: 800; color: var(--primary); 
+            letter-spacing: -1px; margin: 0; display: flex; align-items: center; gap: 12px;
+        }
+        .logo-section span { color: #0f172a; }
+
+        /* ----- INPUT FIELDS ----- */
+        .input-box {
+            background: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px;
+            padding: 18px 24px; margin-bottom: 18px; transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .input-box:focus-within { 
+            border-color: var(--primary); box-shadow: 0 10px 15px -3px rgba(26, 166, 183, 0.15);
+            transform: translateY(-2px);
+        }
+        .input-box label { font-size: 11px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; }
+        .input-box select, .input-box input { 
+            width: 100%; border: none; outline: none; background: transparent; 
+            font-size: 15px; font-weight: 600; margin-top: 6px; color: #334155;
+        }
+
+        /* ----- VEHICLE SELECTION CARDS ----- */
+        .vehicle-options { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
+        .v-card {
+            background: #fff; border: 2px solid #f1f5f9; border-radius: 20px;
+            padding: 20px; cursor: pointer; display: flex; justify-content: space-between;
+            align-items: center; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .v-card:hover { border-color: var(--primary); background: #f0fdfa; }
+        .v-card.selected { 
+            border-color: var(--primary); background: #f0fdfa; 
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+        }
+        .v-card b { font-size: 17px; color: #0f172a; }
+        .v-card span { font-size: 14px; color: var(--primary); font-weight: 700; }
+
+        /* ----- FULL SCREEN RADAR OVERLAY ----- */
+        #radarOverlay {
+            position: fixed; inset: 0; background: #0f172a; z-index: 9999;
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .radar-box {
+            width: 280px; height: 280px; border-radius: 50%; border: 1px solid rgba(0, 242, 255, 0.2);
+            position: relative; overflow: hidden;
+            background: radial-gradient(circle, rgba(0, 242, 255, 0.05) 0%, transparent 70%);
+        }
+        .sweep {
+            position: absolute; width: 50%; height: 50%; top: 0; left: 0;
+            background: linear-gradient(45deg, var(--accent), transparent);
+            transform-origin: bottom right; animation: rotate 2s linear infinite;
+        }
+
+        /* ----- LUXURY DRIVER PROFILE CARD ----- */
+        #driverProfile {
+            display: none; margin-top: 20px; background: #ffffff; border-radius: 30px;
+            padding: 30px; box-shadow: var(--card-shadow); border: 1px solid #f1f5f9;
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .driver-header { display: flex; gap: 20px; align-items: center; margin-bottom: 25px; }
+        .driver-avatar { 
+            width: 80px; height: 80px; border-radius: 25px; object-fit: cover;
+            border: 4px solid #f0fdfa; box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        }
+        .driver-info h3 { margin: 0; font-size: 20px; font-weight: 800; color: #0f172a; }
+        .rating-badge { background: #fef9c3; color: #854d0e; padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: 800; }
+
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        .stat-item { background: #f8fafc; padding: 15px; border-radius: 15px; text-align: center; }
+        .stat-label { font-size: 10px; font-weight: 800; color: #94a3b8; text-transform: uppercase; }
+        .stat-value { font-size: 16px; font-weight: 700; color: #1e293b; margin-top: 4px; }
+
+        .btn-confirm {
+            width: 100%; background: var(--primary); color: white; border: none;
+            padding: 22px; border-radius: 22px; font-weight: 800; font-size: 16px;
+            cursor: pointer; margin-top: auto; transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(26, 166, 183, 0.25);
+        }
+        .btn-confirm:hover { background: var(--primary-dark); transform: translateY(-2px); }
+        .btn-cancel { 
+            width: 100%; background: #fff1f2; color: #e11d48; border: none; padding: 15px;
+            border-radius: 15px; font-weight: 700; margin-top: 20px; cursor: pointer; transition: 0.2s;
+        }
+
+        /* ----- MAP VIEW ----- */
+        .map-view { flex: 1; position: relative; }
+        #map { height: 100%; width: 100%; }
+
+        #navPopup {
+            position: absolute; top: 30px; left: 50%; transform: translateX(-50%);
+            background: #0f172a; color: white; padding: 15px 35px; border-radius: 50px;
+            z-index: 2000; display: none; font-weight: 700; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+<div id="radarOverlay">
+    <div class="radar-box"><div class="sweep"></div></div>
+    <h2 style="color: white; margin-top: 40px; letter-spacing: 2px; font-weight: 300;">MATCHING WITH <span style="color:var(--accent); font-weight:800;">ELITE</span> CAPTAINS</h2>
+    <p id="radarLog" style="color: #94a3b8; font-weight: 500;">Accessing local traffic grid...</p>
+</div>
+
+<div class="app-container">
+    <div class="sidebar">
+        <div class="logo-section">
+            <h1>🚑 MedCab.</h1>
+        </div>
+
+        <div id="bookingFlow">
+            <div class="input-box">
+                <label>Pickup Location</label>
+                <input type="text" value="Waghodia Road, Vadodara" readonly>
+            </div>
+
+            <div class="input-box">
+                <label>Select Destination Hospital</label>
+                <select id="hospSelect" onchange="updateTripDetails()">
+                    <option value="" disabled selected>Search Govt Hospitals...</option>
+                    <option value="6.4|22.3106|73.1926|S.S.G. Hospital">S.S.G. Hospital (Govt)</option>
+                    <option value="11.2|22.3210|73.1415|GMERS Medical College">GMERS Hospital (Govt)</option>
+                    <option value="12.5|22.2661|73.3644|Waghodia PHC Center">Waghodia PHC Center</option>
+                </select>
+            </div>
+
+            <div class="vehicle-options">
+                <div class="v-card selected" onclick="selectTier(this, 12)">
+                    <div><b>MedBike</b><br><small style="color:#94a3b8">Fastest response</small></div>
+                    <span class="price-tag">₹--</span>
+                </div>
+                <div class="v-card" onclick="selectTier(this, 25)">
+                    <div><b>MedCab</b><br><small style="color:#94a3b8">Luxury & Oxygen</small></div>
+                    <span class="price-tag">₹--</span>
+                </div>
+            </div>
+
+            <button class="btn-confirm" onclick="runEliteScan()">CONFIRM ELITE RIDE</button>
+        </div>
+
+        <div id="driverProfile">
+            <div class="driver-header">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150" class="driver-avatar">
+                <div class="driver-info">
+                    <h3>Vikram Parmar</h3>
+                    <div style="display:flex; gap:8px; margin-top:5px;">
+                        <span class="rating-badge">⭐ 4.98</span>
+                        <span style="font-size: 12px; font-weight:700; color:var(--primary);">PRO CAPTAIN</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat-item">
+                    <div class="stat-label">Secure PIN</div>
+                    <div class="stat-value" style="color:var(--primary); font-size:22px;">8821</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Vehicle No.</div>
+                    <div class="stat-value">GJ 06 AA 4492</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Model</div>
+                    <div class="stat-value">Suzuki Swift</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Status</div>
+                    <div class="stat-value" id="tripStatus" style="color:var(--primary);">On the way</div>
+                </div>
+            </div>
+
+            <button class="btn-cancel" onclick="location.reload()">CANCEL REQUEST</button>
+        </div>
+    </div>
+
+    <div class="map-view">
+        <div id="navPopup">⬆️ Head South on Waghodia Rd</div>
+        <div id="map"></div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    // 1. Map Core
+    const pickupPos = [22.2856, 73.2384];
+    let map = L.map('map', { zoomControl: false }).setView(pickupPos, 14);
+    
+    // Custom Premium Map Tiles
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png').addTo(map);
+
+    const markerHtml = `<div style="width:20px; height:20px; background:var(--primary); border:4px solid white; border-radius:50%; box-shadow:0 0 20px var(--primary);"></div>`;
+    L.marker(pickupPos, {icon: L.divIcon({html: markerHtml, className: ''})}).addTo(map);
+
+    let dropMarker, routeLine;
+
+    function updateTripDetails() {
+        const val = document.getElementById('hospSelect').value.split('|');
+        const dist = parseFloat(val[0]);
+        const prices = document.querySelectorAll('.price-tag');
+        
+        prices[0].innerText = "₹" + Math.round(dist * 12 + 20);
+        prices[1].innerText = "₹" + Math.round(dist * 22 + 45);
+
+        if(dropMarker) map.removeLayer(dropMarker);
+        if(routeLine) map.removeLayer(routeLine);
+
+        dropMarker = L.marker([val[1], val[2]]).addTo(map).bindPopup(val[3]).openPopup();
+        routeLine = L.polyline([pickupPos, [val[1], val[2]]], {color: 'var(--primary)', weight: 6, opacity: 0.6}).addTo(map);
+        map.fitBounds(routeLine.getBounds(), {padding: [100, 100]});
+    }
+
+    function runEliteScan() {
+        if(!document.getElementById('hospSelect').value) { alert("Please select a hospital first!"); return; }
+        
+        const radar = document.getElementById('radarOverlay');
+        const log = document.getElementById('radarLog');
+        radar.style.display = 'flex';
+
+        setTimeout(() => log.innerText = "Finding nearest verified medical Captains...", 2000);
+        setTimeout(() => log.innerText = "Captain Vikram assigned (1.2 km away)...", 4500);
+
+        setTimeout(() => {
+            radar.style.display = 'none';
+            document.getElementById('bookingFlow').style.display = 'none';
+            document.getElementById('driverProfile').style.display = 'block';
+            document.getElementById('navPopup').style.display = 'block';
+            simulateDriver();
+        }, 6000);
+    }
+
+    function simulateDriver() {
+        const carIcon = L.divIcon({ html: '<div style="font-size:35px; filter:drop-shadow(0 10px 10px rgba(0,0,0,0.2))">🚗</div>', className: '', iconSize: [40, 40] });
+        let carPos = [pickupPos[0] + 0.008, pickupPos[1] + 0.008];
+        let carMarker = L.marker(carPos, {icon: carIcon}).addTo(map);
+
+        let steps = 0;
+        const interval = setInterval(() => {
+            steps++;
+            carPos[0] -= 0.00016; carPos[1] -= 0.00016;
+            carMarker.setLatLng(carPos);
+            map.panTo(carPos);
+
+            if(steps == 25) document.getElementById('navPopup').innerText = "⬅️ Turn Left in 200 meters";
+            if(steps >= 50) {
+                clearInterval(interval);
+                document.getElementById('navPopup').innerText = "✅ Captain Arrived at Waghodia Road";
+                document.getElementById('tripStatus').innerText = "Arrived";
+                carMarker.setLatLng(pickupPos);
+            }
+        }, 300);
+    }
+
+    function selectTier(el) {
+        document.querySelectorAll('.v-card').forEach(c => c.classList.remove('selected'));
+        el.classList.add('selected');
+    }
+</script>
+
+</body>
+</html>

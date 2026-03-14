@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HealthAI Assistant</title>
+
+<style>
+/* THEME VARIABLES - UPDATED TO OCEANIC */
+:root {
+    --bg: #f2fbff;
+    --chat: #ffffff;
+    --text: #08363f;
+    --accent: #1aa6b7;
+    --soft: #dff3f5;
+}
+
+[data-theme="dark"] {
+    --bg: #05161d;
+    --chat: #0a242d;
+    --text: #e6fbff;
+    --accent: #26d0ce;
+    --soft: #0f3b47;
+}
+
+body {
+    margin: 0;
+    font-family: Inter, system-ui;
+    background: var(--bg);
+    color: var(--text);
+    transition: 0.4s;
+}
+
+/* HEADER */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 35px;
+    background: var(--soft);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.toggle {
+    cursor: pointer;
+    padding: 8px 14px;
+    border-radius: 20px;
+    background: var(--accent);
+    color: white;
+    font-weight: 600;
+    border: none;
+}
+
+/* LAYOUT */
+.layout {
+    border-radius: 10px;
+    display: flex;
+    height: calc(100vh - 60px);
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 280px;
+    background: var(--soft);
+    padding: 20px;
+    overflow: auto;
+}
+
+.quick {
+    background: var(--chat);
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+    animation: fadeIn 0.5s ease;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.quick:hover {
+    transform: translateX(4px);
+    border-color: var(--accent);
+}
+
+/* CHAT */
+.chat {
+    flex: 10;
+    display: flex;
+    flex-direction: column;
+    background: var(--chat);
+    border-radius: 80px;
+}
+
+.messages {
+    flex: 1;
+    padding: 30px;
+    overflow: auto;
+}
+
+.msg {
+    max-width: 65%;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+    border-radius: 12px;
+    animation: msgAppear 0.3s ease;
+}
+
+.user {
+    margin-left: auto;
+    background: var(--accent);
+    color: white;
+}
+
+.bot {
+    background: var(--soft);
+}
+
+/* INPUT */
+.input {
+    display: flex;
+    padding: 16px;
+    gap: 10px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    position: sticky;
+    bottom: 0;
+    background: var(--chat);
+}
+
+.input input {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: var(--bg);
+    color: var(--text);
+}
+
+.input button {
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: var(--accent);
+    color: white;
+    cursor: pointer;
+}
+
+/* PANEL */
+.panel {
+    width: 260px;
+    background: var(--soft);
+    padding: 20px;
+    overflow: auto;
+}
+
+.card {
+    background: var(--chat);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    animation: fadeIn 0.6s ease;
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
+@keyframes msgAppear { from{opacity:0;transform:scale(0.95);} to{opacity:1;transform:scale(1);} }
+.typing { opacity:0.6; font-style:italic; }
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">HealthAI</div>
+    <div style="display:flex; gap:10px;">
+        <button class="toggle" style="background:#64748b;" onclick="window.location.href='index.html'">Home</button>
+        <button class="toggle" onclick="toggleTheme()" id="theme-text">Dark Mode</button>
+    </div>
+</header>
+
+<div class="layout">
+    <div class="sidebar">
+        <h3>Try asking</h3>
+        <div class="quick" onclick="ask('I have headache')">Headache help</div>
+        <div class="quick" onclick="ask('symptoms of malaria')">Malaria symptoms</div>
+        <div class="quick" onclick="ask('book doctor')">Doctor appointment</div>
+        <div class="quick" onclick="ask('emergency help')">Emergency</div>
+        <br>
+        <h3>Upload Report</h3>
+        <input type="file" onchange="scanReport()">
+    </div>
+
+    <div class="chat">
+        <div class="messages" id="chat">
+            <div class="msg bot">Hello 👋 I am HealthAI. Your smart healthcare assistant.</div>
+        </div>
+        <div class="input">
+            <input id="input" placeholder="Ask HealthAI anything about healthcare...">
+            <button onclick="send()">Send</button>
+            <button onclick="voice()">🎤</button>
+        </div>
+    </div>
+
+    <div class="panel">
+        <div class="card"><b>Health Tip</b><p>Daily walking improves heart health.</p></div>
+        <div class="card"><b>System</b><p>AI ready for hospital integration.</p></div>
+        <div class="card"><b>Emergency</b><p>If breathing problem occurs contact ambulance.</p></div>
+    </div>
+</div>
+
+<script>
+const chat = document.getElementById("chat");
+
+// --- START OF YOUR ORIGINAL LOGIC (DO NOT CHANGE) ---
+const medicalDB = {
+    fever: { title: "Fever", symptoms: ["High body temperature", "Body weakness", "Chills", "Sweating"], care: ["Drink plenty of fluids", "Take proper rest", "Paracetamol if prescribed"], doctor: "Consult doctor if fever lasts more than 2-3 days." },
+    cold: { title: "Common Cold", symptoms: ["Runny nose", "Sneezing", "Sore throat", "Mild fever"], care: ["Warm fluids", "Steam inhalation", "Proper rest"], doctor: "Usually improves in 5-7 days." },
+    headache: { title: "Headache", symptoms: ["Head pain", "Pressure feeling", "Sensitivity to light"], care: ["Drink water", "Take rest", "Reduce screen time"], doctor: "Consult doctor if frequent." },
+    dengue: { title: "Dengue", symptoms: ["High fever", "Pain behind eyes", "Body pain", "Severe weakness"], care: ["Blood test required", "Stay hydrated", "Monitor platelets"], doctor: "Seek immediate medical help." },
+    malaria: { title: "Malaria", symptoms: ["Fever with chills", "Sweating", "Fatigue", "Nausea"], care: ["Doctor prescribed medicines", "Early diagnosis important"], doctor: "Visit hospital for testing." },
+    diabetes: { title: "Diabetes", symptoms: ["Frequent urination", "Increased thirst", "Fatigue", "Weight loss"], care: ["Monitor blood sugar", "Healthy diet", "Regular exercise"], doctor: "Consult doctor for proper treatment." },
+    asthma: { title: "Asthma", symptoms: ["Difficulty breathing", "Wheezing", "Chest tightness"], care: ["Use inhaler", "Avoid dust", "Monitor breathing"], doctor: "Emergency if breathing worsens." },
+    food: { title: "Food Poisoning", symptoms: ["Vomiting", "Diarrhea", "Stomach pain"], care: ["Drink ORS", "Hydration", "Light food"], doctor: "Doctor needed if severe." },
+    bp: { title: "High Blood Pressure", symptoms: ["Headache", "Dizziness", "Chest discomfort"], care: ["Reduce salt", "Exercise", "Regular BP monitoring"], doctor: "Regular doctor checkups recommended." },
+    allergy: { title: "Skin Allergy", symptoms: ["Itching", "Redness", "Rash"], care: ["Avoid allergens", "Use prescribed cream", "Keep skin clean"], doctor: "Consult dermatologist if severe." },
+    stomach: { title: "Stomach Infection", symptoms: ["Vomiting", "Loose motion", "Stomach pain"], care: ["ORS solution", "Hydration", "Light food"], doctor: "Hospital visit if dehydration occurs." },
+    dehydration: { title: "Dehydration", symptoms: ["Dry mouth", "Weakness", "Dark urine"], care: ["Drink water", "ORS", "Electrolytes"], doctor: "Seek help if severe." }
+};
+
+function send(){
+    let input=document.getElementById("input");
+    let text=input.value;
+    if(text==="") return;
+    addUser(text);
+    input.value="";
+    typing();
+    setTimeout(()=>generate(text),900);
+}
+
+function ask(q){
+    addUser(q);
+    typing();
+    setTimeout(()=>generate(q),900);
+}
+
+function addUser(t){ chat.innerHTML+=`<div class="msg user">${t}</div>`; scroll(); }
+function addBot(t){ chat.innerHTML+=`<div class="msg bot">${t}</div>`; scroll(); }
+function typing(){ chat.innerHTML+=`<div class="msg bot typing" id="typing">HealthAI is typing...</div>`; scroll(); }
+
+function generate(text){
+    document.getElementById("typing")?.remove();
+    text = text.toLowerCase();
+    for (let key in medicalDB) {
+        if (text.includes(key)) {
+            let d = medicalDB[key];
+            let response = `<b>${d.title}</b><br><br><b>Possible Symptoms:</b><br>• ${d.symptoms.join("<br>• ")}<br><br><b>Basic Care:</b><br>• ${d.care.join("<br>• ")}<br><br><b>Medical Advice:</b><br>${d.doctor}`;
+            addBot(response);
+            return;
+        }
+    }
+    addBot("Please ask about common diseases like fever, dengue, malaria, diabetes, asthma, etc.");
+}
+
+function scroll(){ chat.scrollTop=chat.scrollHeight; }
+
+function voice(){
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.start();
+    recognition.onresult=function(e){
+        let speech=e.results[0][0].transcript;
+        document.getElementById("input").value=speech;
+        send();
+    }
+}
+
+function scanReport(){
+    addUser("Uploaded medical report");
+    typing();
+    setTimeout(()=>{
+        document.getElementById("typing")?.remove();
+        addBot("Report scanned. AI analysis will be available soon.");
+    },1500);
+}
+// --- END OF YOUR ORIGINAL LOGIC ---
+
+// --- NEW SYNCED THEME LOGIC ---
+function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    const text = document.getElementById('theme-text');
+    if(theme === 'dark') {
+        if(text) text.innerText = "Light Mode";
+    } else {
+        if(text) text.innerText = "Dark Mode";
+    }
+}
+
+function toggleTheme() {
+    const current = localStorage.getItem('theme') || 'light';
+    applyTheme(current === 'light' ? 'dark' : 'light');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    applyTheme(localStorage.getItem('theme') || 'light');
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BloodLink Enterprise | Critical Response Unit</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f4f7fa; 
+            --card: rgba(255, 255, 255, 0.9);
+            --text-main: #1e293b; 
+            --text-sub: #64748b;
+            --accent: #e11d48; 
+            --accent-soft: rgba(225, 29, 72, 0.05);
+            --border: rgba(226, 232, 240, 0.8);
+            --success: #059669;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.02);
+        }
+        [data-theme="dark"] {
+            --bg: #020617; 
+            --card: rgba(30, 41, 59, 0.7);
+            --text-main: #f8fafc; 
+            --text-sub: #94a3b8;
+            --border: rgba(51, 65, 85, 0.5);
+            --accent-soft: rgba(225, 29, 72, 0.15);
+        }
+
+        body { 
+            margin: 0; 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: var(--bg); 
+            color: var(--text-main); 
+            transition: all 0.4s ease;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* PREMIUM NAVIGATION */
+        nav { 
+            padding: 14px 60px; 
+            background: var(--card); 
+            backdrop-filter: blur(12px);
+            display: flex; justify-content: space-between; align-items: center; 
+            border-bottom: 1px solid var(--border); 
+            position: sticky; top: 0; z-index: 1000;
+        }
+           .nav-links a { text-decoration: none; color: var(--text-sub); margin-left: 30px; font-weight: 600; font-size: 14px; }
+        .nav-links a.active { color: var(--accent); }
+        .logo { font-size: 22px; font-weight: 800; color: var(--accent); letter-spacing: -1px; display: flex; align-items: center; gap: 8px; }
+        .logo span { color: var(--text-main); }
+
+        /* SEARCH SECTION */
+        .search-hero { padding: 80px 20px 40px; text-align: center; }
+        .search-hero h1 { font-size: 48px; font-weight: 800; margin-bottom: 15px; letter-spacing: -1.5px; }
+        .search-container { 
+            max-width: 960px; margin: 30px auto; 
+            background: var(--card); 
+            padding: 10px; border-radius: 24px; 
+            display: grid; grid-template-columns: 180px 1fr 140px; gap: 10px; 
+            box-shadow: var(--shadow-lg); border: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+        }
+        .search-container select, .search-container input { 
+            border: none; padding: 16px; outline: none; background: transparent; 
+            color: var(--text-main); font-weight: 700; font-size: 15px; 
+        }
+
+        /* DASHBOARD LAYOUT */
+        .dashboard { 
+            max-width: 1440px; margin: 40px auto; padding: 0 40px; 
+            display: grid; grid-template-columns: 320px 1fr; gap: 50px; 
+        }
+
+        /* SIDEBAR (LEFT) - MINOR DETAILS POLISHED */
+        .sidebar { position: sticky; top: 120px; height: fit-content; }
+        .sidebar-card { 
+            background: var(--card); border-radius: 28px; padding: 32px; 
+            border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+        }
+        .badge-live { 
+            display: inline-flex; align-items: center; gap: 6px; 
+            background: var(--accent-soft); color: var(--accent); 
+            padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 800; margin-bottom: 25px;
+        }
+        .dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
+        .guideline-item { margin-bottom: 24px; }
+        .guideline-item h4 { font-size: 14px; margin-bottom: 8px; font-weight: 800; }
+        .guideline-item p { font-size: 13px; color: var(--text-sub); margin: 0; line-height: 1.6; font-weight: 500; }
+
+        /* CONTENT CARDS (RIGHT) */
+        .case-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+        .case-card { 
+            background: var(--card); border-radius: 28px; padding: 28px; 
+            border: 1px solid var(--border); transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .case-card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 30px 60px -12px rgba(0,0,0,0.1); }
+        
+        .blood-pill { 
+            width: fit-content; padding: 4px 16px; background: var(--accent-soft); 
+            color: var(--accent); border-radius: 12px; font-weight: 800; font-size: 18px; margin-bottom: 18px; 
+        }
+        .case-card h3 { margin: 0; font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+        .case-card .hosp-name { font-size: 13px; color: var(--text-sub); font-weight: 600; margin: 6px 0 24px; display: flex; align-items: center; gap: 4px; }
+
+        .btn-confirm { 
+            width: 100%; padding: 16px; border-radius: 18px; border: none; 
+            background: var(--accent); color: white; font-weight: 800; 
+            cursor: pointer; transition: 0.3s; font-size: 14px; letter-spacing: 0.5px;
+        }
+        .btn-confirm:hover { background: #be123c; transform: scale(1.02); }
+        .btn-confirm:disabled { background: var(--border); color: var(--text-sub); cursor: not-allowed; transform: none; }
+
+        /* PAGINATION */
+        .pagination { display: flex; justify-content: center; gap: 12px; margin: 60px 0; }
+        .page-link { 
+            width: 48px; height: 48px; border-radius: 16px; border: 1px solid var(--border); 
+            background: var(--card); color: var(--text-main); font-weight: 800; cursor: pointer; transition: 0.2s;
+        }
+        .page-link.active { background: var(--text-main); color: var(--bg); border-color: var(--text-main); }
+
+        /* MEGA FOOTER - CLEAN DARK MODE */
+        .mega-footer { background: #020617; color: #f8fafc; padding: 100px 60px 50px; }
+        .footer-content { 
+            max-width: 1440px; margin: 0 auto; 
+            display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 80px; 
+        }
+        .footer-logo { font-size: 28px; font-weight: 800; color: var(--accent); margin-bottom: 25px; }
+        .footer-col h5 { font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 30px; color: var(--accent); }
+        .footer-col ul { list-style: none; padding: 0; }
+        .footer-col li { margin-bottom: 18px; font-size: 14px; opacity: 0.6; cursor: pointer; transition: 0.3s; font-weight: 500; }
+        .footer-col li:hover { opacity: 1; color: var(--accent); transform: translateX(5px); }
+
+        @media (max-width: 1100px) {
+            .dashboard { grid-template-columns: 1fr; }
+            .sidebar { position: relative; top: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">Med<span>Bank</span></div>
+       <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="lab_test.html" class="active">Lab Tests</a>
+        <a href="support.html">Support</a>
+        <a href="faq.html">FAQs</a>
+        <a href="doctor.html">Doctors</a>
+        <button onclick="toggleTheme()" id="themeBtn" style="background:none; border:none; cursor:pointer; margin-left:20px;">🌙</button>
+    </div>
+</nav>
+
+<section class="search-hero">
+    <h1>Connect with Life.</h1>
+    <p style="color: var(--text-sub); font-size: 18px; font-weight: 500;">Secure, verified network for real-time blood emergency response.</p>
+    
+    <div class="search-container">
+        <select id="bFilter" onchange="searchEngine()">
+            <option value="All">All Blood Groups</option>
+            <option value="A+">A+</option><option value="B+">B+</option>
+            <option value="O-">O- (Universal)</option><option value="AB+">AB+</option>
+            <option value="O+">O+</option><option value="A-">A-</option>
+        </select>
+        <input type="text" id="hFilter" placeholder="Search Hospital or Patient Case..." onkeyup="searchEngine()">
+        <button class="btn-confirm" style="padding: 0;" onclick="searchEngine()">SYNC FEED</button>
+    </div>
+</section>
+
+<div class="dashboard">
+    <aside class="sidebar">
+        <div class="sidebar-card">
+            <div class="badge-live"><div class="dot"></div> LIVE FEED ACTIVE</div>
+            
+            <div class="guideline-item">
+                <h4>Verified Screening</h4>
+                <p>All cases are pre-vetted by NABL labs to ensure direct hospital entry.</p>
+            </div>
+            
+            <div class="guideline-item">
+                <h4>Post-Donation</h4>
+                <p>24-hour hydration and high-iron nutrition is mandatory after acceptance.</p>
+            </div>
+            
+            <div class="guideline-item">
+                <h4>Legal Protection</h4>
+                <p>Data is encrypted under HIPAA compliance for donor anonymity.</p>
+            </div>
+
+            <div style="margin-top: 40px; padding-top: 25px; border-top: 1px solid var(--border);">
+                <span style="font-size: 11px; font-weight: 800; color: var(--text-sub);">SUPPORT 24/7</span>
+                <p style="font-weight: 800; margin-top: 5px;">1800-419-0108</p>
+            </div>
+        </div>
+    </aside>
+
+    <main>
+        <div class="case-grid" id="caseGrid"></div>
+        <div class="pagination" id="pageControls"></div>
+    </main>
+</div>
+
+<footer class="mega-footer">
+    <div class="footer-content">
+        <div>
+            <div class="footer-logo">BloodLink™</div>
+            <p style="opacity: 0.5; font-size: 14px; line-height: 1.8;">Leading the digital transformation in emergency medical response. Connecting thousands of donors to critical needs across 250+ cities.</p>
+        </div>
+        <div class="footer-col">
+            <h5>Operations</h5>
+            <ul><li>Critical Feed</li><li>Mobile Units</li><li>Hospital Partners</li></ul>
+        </div>
+        <div class="footer-col">
+            <h5>Governance</h5>
+            <ul><li>Privacy Protocol</li><li>Data Usage</li><li>Compliance</li></ul>
+        </div>
+        <div class="footer-col">
+            <h5>Download App</h5>
+            <div style="padding: 20px; border: 1px solid rgba(255,255,255,0.1); border-radius: 20px;">
+                <p style="font-size: 12px; opacity: 0.6; margin: 0;">Access real-time alerts on your mobile.</p>
+                <p style="font-weight: 800; margin-top: 10px;">MedConnect Pro App</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const bGroups = ["A+", "B+", "O-", "AB+", "O+", "A-"];
+    const hospitalList = ["Apollo Hospitals", "Max Super Speciality", "Fortis Memorial", "AIIMS Delhi", "Medanta Medicity"];
+    const patientList = ["Amit R.", "Sanya G.", "Vikram K.", "Priya S.", "Kabir J.", "Zoya W."];
+
+    let cases = [];
+    for(let i=1; i<=36; i++) {
+        cases.push({
+            id: 5000 + i,
+            name: patientList[i % patientList.length] + " (Ref: #" + (100+i) + ")",
+            hosp: hospitalList[i % hospitalList.length],
+            group: bGroups[i % bGroups.length],
+            status: "LIVE",
+            booked: false
+        });
+    }
+
+    let currentPage = 1;
+    const itemsPerPage = 9;
+    let filtered = [...cases];
+
+    function renderUI() {
+        const grid = document.getElementById('caseGrid');
+        const start = (currentPage - 1) * itemsPerPage;
+        const pageData = filtered.slice(start, start + itemsPerPage);
+
+        grid.innerHTML = pageData.map(c => `
+            <div class="case-card" style="opacity: ${c.booked ? '0.5' : '1'}">
+                <div>
+                    <div class="blood-pill">${c.group}</div>
+                    <h3>${c.name}</h3>
+                    <div class="hosp-name">🏥 ${c.hosp}</div>
+                </div>
+                <button class="btn-confirm" ${c.booked ? 'disabled' : ''} onclick="acceptCase(${c.id})">
+                    ${c.booked ? 'SLOT BOOKED' : 'ACCEPT CASE'}
+                </button>
+            </div>
+        `).join('');
+
+        renderPagination();
+    }
+
+    function renderPagination() {
+        const total = Math.ceil(filtered.length / itemsPerPage);
+        const ctrl = document.getElementById('pageControls');
+        let html = '';
+        for(let i=1; i<=total; i++) {
+            html += `<button class="page-link ${i === currentPage ? 'active' : ''}" onclick="toPage(${i})">${i}</button>`;
+        }
+        ctrl.innerHTML = html;
+    }
+
+    function toPage(p) {
+        currentPage = p;
+        renderUI();
+        window.scrollTo({ top: 350, behavior: 'smooth' });
+    }
+
+    function searchEngine() {
+        const blood = document.getElementById('bFilter').value;
+        const text = document.getElementById('hFilter').value.toLowerCase();
+
+        filtered = cases.filter(c => {
+            return (blood === "All" || c.group === blood) && 
+                   (c.hosp.toLowerCase().includes(text) || c.name.toLowerCase().includes(text));
+        });
+
+        currentPage = 1;
+        renderUI();
+    }
+
+    function acceptCase(id) {
+        const idx = cases.findIndex(c => c.id === id);
+        if(idx !== -1) {
+            cases[idx].booked = true;
+            alert("CASE ACCEPTED: Check your email for the hospital clearance pass.");
+            searchEngine();
+        }
+    }
+
+    function toggleTheme() {
+        const current = document.documentElement.getAttribute('data-theme');
+        document.documentElement.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+    }
+
+    document.addEventListener('DOMContentLoaded', renderUI);
+</script>
+</body>
+</html>

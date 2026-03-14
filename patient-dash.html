@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <title>Patient Portal</title>
+    <script src="new.js" defer></script>
+</head>
+<body class="dash-body">
+    <nav class="dash-nav">
+        <h2>MedConnect | Patient</h2>
+        <a href="login.html">Logout</a>
+    </nav>
+   <div class="search-container">
+    <h2>Doctor & Hospital Finder</h2>
+    <div class="input-group">
+        <input type="text" id="userSearch" placeholder="Type Disease or Area (e.g. Fever, Delhi)...">
+        <button onclick="findHospitals()">Search Near Me</button>
+    </div>
+
+    <div id="mapFrame">
+        <iframe 
+            id="hospitalMap"
+            width="100%" 
+            height="450" 
+            src="https://maps.google.com/maps?q=hospitals&t=&z=13&ie=UTF8&iwloc=&output=embed" 
+            frameborder="0" 
+            style="border:0; border-radius: 15px; margin-top: 20px;">
+        </iframe>
+    </div>
+</div>
+    <script>
+        function loadMap() {
+            let q = document.getElementById('pSearch').value;
+            document.getElementById('pMap').src = `https://www.google.com/maps?q=[SEARCH_TERM]&output=embed6{q} hospital&output=embed`;
+        }
+    </script>
+</body>
+</html>

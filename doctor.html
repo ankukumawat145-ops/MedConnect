@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Executive Medical Registry | MedConnect</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text-main: #01040d;
+    --text-sub: #64748b;
+    --accent: #1aa6b7;
+    --border: #e2e8f0;
+    --premium: #1e293b;
+}
+
+[data-theme="dark"] {
+    --bg: #0b0f1a;
+    --card: #161b2a;
+    --text-main: #f1f5f9;
+    --text-sub: #94a3b8;
+    --accent: #38bdf8;
+    --border: #2d364d;
+}
+
+body {
+    margin: 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text-main);
+}
+
+/* NAVBAR */
+nav {
+    padding: 25px 60px;
+    background: var(--card);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 1000;
+}
+
+.nav-links a { text-decoration: none; color: var(--text-sub); margin-left: 30px; font-weight: 600; font-size: 14px; transition: 0.3s; }
+
+/* HERO & SEARCH */
+.hero-search {
+    padding: 60px 20px 40px 20px;
+    text-align: center;
+    background: radial-gradient(circle at top right, #e0f2fe, var(--bg));
+}
+
+.search-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 8px;
+    border-radius: 16px;
+    display: inline-flex;
+    width: 100%;
+    max-width: 700px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.search-box input { border: none; background: transparent; padding: 15px; flex: 1; outline: none; font-size: 16px; color: var(--text-main); }
+.search-box button { background: var(--accent); color: white; border: none; padding: 12px 25px; border-radius: 12px; cursor: pointer; font-weight: 700; }
+
+/* PROFESSIONAL APPOINTMENT SLIP */
+.appointment-slip {
+    max-width: 700px;
+    margin: 20px auto;
+    background: #ecfdf5;
+    border: 1px solid #10b981;
+    border-radius: 12px;
+    padding: 15px 25px;
+    display: none;
+    text-align: left;
+    animation: fadeIn 0.5s ease;
+}
+
+.slip-content { display: flex; align-items: center; justify-content: space-between; }
+.status-indicator { display: flex; align-items: center; gap: 10px; font-weight: 700; color: #065f46; }
+.dot { height: 10px; width: 10px; background: #10b981; border-radius: 50%; display: inline-block; }
+
+/* DOCTOR CARDS */
+.container { max-width: 1000px; margin: 40px auto; padding: 0 20px; min-height: 600px; }
+
+.doc-profile {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 35px;
+    margin-bottom: 30px;
+    display: flex;
+    gap: 40px;
+}
+
+.doc-portrait { width: 180px; height: 180px; border-radius: 20px; object-fit: cover; }
+.info-content { flex: 1; }
+.doc-header { display: flex; justify-content: space-between; align-items: flex-start; }
+.doc-name { font-size: 26px; font-weight: 800; margin: 0; }
+.verify-tick { color: #0ea5e9; font-size: 20px; }
+.credentials { color: var(--accent); font-weight: 700; font-size: 14px; margin-top: 5px; }
+.rating-tag { background: #fef9c3; color: #854d0e; padding: 4px 12px; border-radius: 8px; font-weight: 800; font-size: 13px; margin: 10px 0; display: inline-block; }
+.doc-bio { font-size: 15px; color: var(--text-sub); line-height: 1.7; margin: 15px 0; }
+.doc-meta { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; font-size: 14px; border-top: 1px solid var(--border); padding-top: 20px; }
+.meta-item b { display: block; color: var(--text-main); font-size: 12px; text-transform: uppercase; opacity: 0.6; }
+
+.book-btn { background: var(--accent); color: white; border: none; padding: 16px 30px; border-radius: 14px; font-weight: 800; cursor: pointer; transition: 0.3s; width: 100%; }
+
+/* PAGINATION */
+.pagination { display: flex; justify-content: center; gap: 10px; margin: 50px 0; }
+.page-btn { padding: 10px 18px; border: 1px solid var(--border); background: var(--card); cursor: pointer; border-radius: 8px; font-weight: 600; color: var(--text-main); transition: 0.3s; }
+.page-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+/* FOOTER */
+
+          .site-footer {
+        background-color: var(--card); /* Light mein white, Dark mein dark-blue/black */
+        border-top: 1px solid var(--border);
+        padding: 80px 0 40px 0;
+        margin-top: 100px;
+        transition: 0.3s ease;
+        color: var(--text-main);
+    }
+    .footer-link {
+        color: var(--text-sub);
+        text-decoration: none;
+        transition: 0.2s;
+        cursor: pointer;
+    }
+    .footer-link:hover {
+        color: var(--accent);
+    }
+    .footer-heading {
+        color: var(--accent);
+        font-size: 14px;
+        letter-spacing: 1.2px;
+        margin-bottom: 25px;
+        text-transform: uppercase;
+        font-weight: 800;
+    }
+
+/* MODAL */
+#bookingModal {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(8px); z-index: 2000;
+}
+
+.modal-card {
+    background: var(--card); width: 420px; margin: 80px auto; padding: 40px; border-radius: 30px;
+}
+
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 14px; }
+.form-group input, .form-group select { width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg); color: var(--text-main); }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* PROFESSIONAL MEDCAB CONFIRM POPUP ANIMATION */
+@keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+#customConfirmModal {
+    display:none; position:fixed; top:0; left:0; width:100%; height:100%; 
+    background:rgba(15, 23, 42, 0.5); backdrop-filter:blur(10px); z-index:9999; 
+    align-items:center; justify-content:center;
+}
+.premium-card {
+    background:white; width:90%; max-width:420px; padding:35px; border-radius:35px; 
+    text-align:center; box-shadow:0 30px 60px rgba(0,0,0,0.2); animation: slideUp 0.5s ease;
+}
+.priority-tag { background:#fef2f2; color:#ef4444; padding:5px 15px; border-radius:50px; font-size:11px; font-weight:800; display:inline-block; margin-bottom:15px; }
+.btn-ride-now { background:#1aa6b7; color:white; border:none; padding:18px; border-radius:18px; font-weight:800; font-size:16px; cursor:pointer; width:100%; margin-top:20px; transition:0.3s; }
+.btn-ride-now:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(26,166,183,0.3); }
+
+
+
+</style>
+</head>
+<body>
+
+<nav>
+    <div style="font-size: 26px; font-weight: bold; color:#1aa6b7">MedConnect</div>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#">Clinics</a>
+        <a href="#">E-Pharmacy</a>
+        <button onclick="toggleTheme()" style="background:none; border:none; cursor:pointer; margin-left:30px;">🌓</button>
+    </div>
+</nav>
+
+<section class="hero-search">
+    <h1 style="font-size: 32px; font-weight: 800; margin-bottom: 10px;">Executive Medical Registry</h1>
+    <p style="color:var(--text-sub); margin-bottom: 30px;">Professional search for elite medical practitioners across India.</p>
+    
+    <div class="search-box">
+        <input type="text" id="searchInput" onkeyup="handleSearch()" placeholder="Search by name, disease, city, or hospital...">
+        <button onclick="handleSearch()">Search</button>
+    </div>
+
+    <div class="appointment-slip" id="successSlip">
+        <div class="slip-content">
+            <div>
+                <div class="status-indicator"><span class="dot"></span> Confirmed Consultation</div>
+                <div style="font-size: 15px; margin-top: 5px; color: #065f46;">
+                    Patient scheduled with <b id="slipDoc">...</b> on <b id="slipTime">...</b>
+                </div>
+            </div>
+            <button onclick="scrollToDoctor()" style="background:#10b981; color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer; font-weight:700;">View Details</button>
+        </div>
+    </div>
+</section>
+
+<div class="container" id="docList"></div>
+<div class="pagination" id="pagination"></div>
+
+<div id="bookingModal">
+    <div class="modal-card">
+        <h2 id="modalName" style="margin-top:0; font-size:24px;"></h2>
+        <div class="form-group">
+            <label>Preferred Appointment Date</label>
+            <input type="date" id="appDate">
+        </div>
+        <div class="form-group">
+            <label>Clinical Time Slot</label>
+            <select id="appTime">
+                <option>09:00 AM</option> <option>11:30 AM</option> <option>02:30 PM</option> <option>05:00 PM</option>
+            </select>
+        </div>
+        <button class="book-btn" onclick="finalizeBooking()">Confirm Appointment</button>
+        <button onclick="closeModal()" style="background:none; border:none; color:var(--text-sub); width:100%; margin-top:20px; cursor:pointer;">Cancel Request</button>
+    </div>
+</div>
+
+<div id="customConfirmModal">
+    <div class="premium-card">
+        <div class="priority-tag">MEDICAL PRIORITY PASS</div>
+        <div style="font-size:50px; margin-bottom:15px;">🏁</div>
+        <h2 style="margin:0; font-size:24px; color:#1e293b;">Appointment Locked!</h2>
+        <p style="color:#64748b; margin:10px 0 25px; line-height:1.5; font-size:15px;">
+            Your visit to <b id="popupHosp" style="color:#1e293b;">Hospital</b> is confirmed. Would you like to book a <b>MedCab Priority Ride</b> for immediate pickup?
+        </p>
+        <button class="btn-ride-now" onclick="goToMedCab()">Book Priority Ride</button>
+        <button onclick="closeConfirmModal()" style="background:none; border:none; color:#94a3b8; font-weight:700; margin-top:15px; cursor:pointer;">I'll manage myself</button>
+    </div>
+</div>
+
+
+<footer class="site-footer">
+    <div style="max-width: 1300px; margin: 0 auto; padding: 0 40px;">
+        
+        <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 60px;">
+            
+            <div>
+                <div style="font-size: 30px; font-weight: 800; color: var(--accent); margin-bottom: 20px;">MedConnect™</div>
+                <p style="color: var(--text-sub); font-size: 15px; line-height: 1.8; margin-bottom: 25px;">
+                    India's premier healthcare bridge. We simplify complex medical journeys through technology and 24/7 empathetic support.
+                </p>
+                <div style="display: flex; gap: 10px;">
+                    <span style="font-size: 10px; font-weight: 800; color: var(--text-sub); border: 1px solid var(--border); padding: 5px 10px; border-radius: 6px;">ISO 27001</span>
+                    <span style="font-size: 10px; font-weight: 800; color: var(--text-sub); border: 1px solid var(--border); padding: 5px 10px; border-radius: 6px;">HIPAA COMPLIANT</span>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="footer-heading">Services</h4>
+                <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2.5;">
+                    <li><a class="footer-link">Find Specialists</a></li>
+                    <li><a class="footer-link">Emergency MedCab</a></li>
+                    <li><a class="footer-link">Home Nursing</a></li>
+                    <li><a class="footer-link">Lab Tests & MRI</a></li>
+                    <li><a class="footer-link">Insurance Claims</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footer-heading">Corporate</h4>
+                <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2.5;">
+                    <li><a class="footer-link">About Us</a></li>
+                    <li><a class="footer-link">Privacy & Data</a></li>
+                    <li><a class="footer-link">Terms of Service</a></li>
+                    <li><a class="footer-link">Refund Policy</a></li>
+                    <li><a class="footer-link">Careers</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footer-heading">Get the App</h4>
+                
+                <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px;">
+                    <div style="background: #000000; color: #ffffff; padding: 10px 18px; border-radius: 12px; display: flex; align-items: center; gap: 12px; cursor: pointer; width: 180px; border: 1px solid #333;">
+                        <span style="font-size: 24px;"></span>
+                        <div style="line-height: 1;">
+                            <span style="font-size: 10px; display: block; opacity: 0.8;">Download on the</span>
+                            <span style="font-size: 15px; font-weight: 700;">App Store</span>
+                        </div>
+                    </div>
+                    <div style="background: #000000; color: #ffffff; padding: 10px 18px; border-radius: 12px; display: flex; align-items: center; gap: 12px; cursor: pointer; width: 180px; border: 1px solid #333;">
+                        <span style="font-size: 20px;">🌐</span>
+                        <div style="line-height: 1;">
+                            <span style="font-size: 10px; display: block; opacity: 0.8;">Get it on</span>
+                            <span style="font-size: 15px; font-weight: 700;">Google Play</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 20px;">
+                    <a href="#" style="text-decoration: none; color: #1DA1F2; font-size: 18px; font-weight: 800;">X</a>
+                    <a href="#" style="text-decoration: none; color: #E1306C; font-size: 18px; font-weight: 800;">IG</a>
+                    <a href="#" style="text-decoration: none; color: #0077B5; font-size: 18px; font-weight: 800;">IN</a>
+                    <a href="#" style="text-decoration: none; color: #FF0000; font-size: 18px; font-weight: 800;">YT</a>
+                </div>
+            </div>
+        </div>
+
+        <div style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 25px 0; margin-bottom: 30px; text-align: center;">
+            <p style="font-size: 12px; color: var(--text-sub); letter-spacing: 0.8px; margin: 0; font-weight: 600;">
+                OPERATIONAL IN: MUMBAI • DELHI NCR • BENGALURU • HYDERABAD • CHENNAI • KOLKATA • PUNE • JAIPUR • LUCKNOW
+            </p>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; color: var(--text-sub); font-size: 13px;">
+            <div>© 2026 MedConnect Healthcare Private Limited.</div>
+            <div style="display: flex; gap: 25px;">
+                <span class="footer-link" style="font-size: 12px;">Cyber Security</span>
+                <span class="footer-link" style="font-size: 12px;">Sitemap</span>
+                <span class="footer-link" style="font-size: 12px;">Patient Rights</span>
+            </div>
+        </div>
+    </div>
+</footer>
+<script>
+const doctors = [
+    { id: 1, name: "Dr. Arvind Mukherji", degree: "MD, DM (Cardiology) - AIIMS", spec: "Chief of Cardiology", hosp: "Fortis Memorial", bio: "An authority in non-invasive cardiology with over 22 years of surgical excellence.", rating: "9.4", reviews: "42", fees: "₹1,500", loc: "Gurugram, Sector 44", img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400" },
+    { id: 2, name: "Dr. Sarah D'Souza", degree: "MBBS, MS, MCh (Neurology)", spec: "Neurosurgeon", hosp: "Apollo Health City", bio: "Specializing in micro-neurosurgery and spinal disorders with a patient-first approach.", rating: "8.9", reviews: "28", fees: "₹2,200", loc: "Jubilee Hills, HYD", img: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400" },
+    { id: 3, name: "Dr. Rajesh V. Iyer", degree: "MD (Pediatrics), MRCPCH", spec: "Consultant Pediatrician", hosp: "Manipal Hospital", bio: "Expert in neonatal intensive care and developmental pediatrics.", rating: "9.1", reviews: "35", fees: "₹900", loc: "Indiranagar, BLR", img: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400" },
+    { id: 4, name: "Dr. Aditi Malhotra", degree: "MD (Dermatology)", spec: "Cosmetic Dermatologist", hosp: "Max Super Specialty", bio: "Focusing on advanced clinical dermatology and aesthetic laser treatments.", rating: "8.7", reviews: "19", fees: "₹1,100", loc: "Saket, New Delhi", img: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400" },
+    { id: 5, name: "Dr. Vikramaditya Singh", degree: "MBBS, MS (Orthopedics)", spec: "Joint Replacement Specialist", hosp: "Medanta", bio: "Expert in robotic-assisted knee and hip replacements.", rating: "9.4", reviews: "42", fees: "₹1,500", loc: "Gurugram", img: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400" },
+    { id: 6, name: "Dr. Shalini Deshmukh", degree: "MD, DNB (Gynaecology)", spec: "Maternal-Fetal Medicine", hosp: "Cloudnine Hospital", bio: "Specializing in high-risk pregnancies.", rating: "9.7", reviews: "89", fees: "₹1,200", loc: "Mumbai", img: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400" },
+    { id: 7, name: "Dr. Abhinav Rathore", degree: "MD, DM (Gastroenterology)", spec: "Senior Gastroenterologist", hosp: "Sir Ganga Ram", bio: "Specialist in advanced endoscopy.", rating: "8.9", reviews: "34", fees: "₹1,100", loc: "Delhi", img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400" },
+    { id: 8, name: "Dr. Meera Iyer", degree: "MD (Psychiatry)", spec: "Neuro-Psychiatrist", hosp: "NIMHANS", bio: "Dedicated to mental wellness.", rating: "9.2", reviews: "27", fees: "₹2,000", loc: "Bangalore", img: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400" },
+    { id: 9, name: "Dr. Rajeshwar Varma", degree: "MS (ENT)", spec: "ENT & Skull Base Surgeon", hosp: "Apollo", bio: "Specialist in micro-ear surgeries.", rating: "8.7", reviews: "19", fees: "₹900", loc: "Chennai", img: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=400" },
+    { id: 10, name: "Dr. Kirti Azad", degree: "MD (Dermatology)", spec: "Cosmetologist", hosp: "Kaya Skin Clinic", bio: "Focused on aesthetic dermatology.", rating: "9.1", reviews: "56", fees: "₹1,300", loc: "Mumbai", img: "https://images.unsplash.com/photo-1623854767648-e7bb8009f0db?w=400" },
+    { id: 11, name: "Dr. Sameer Qureshi", degree: "MD, DM (Nephrology)", spec: "Senior Nephrologist", hosp: "Lilavati Hospital", bio: "Renowned specialist for kidney transplants.", rating: "9.5", reviews: "41", fees: "₹1,800", loc: "Mumbai", img: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=400" },
+    { id: 12, name: "Dr. Ananya Roy", degree: "MD (Pulmonology)", spec: "Chest & Sleep Specialist", hosp: "Max Specialty", bio: "Expert in treating chronic asthma.", rating: "8.8", reviews: "23", fees: "₹1,000", loc: "Delhi", img: "https://images.unsplash.com/photo-1651008376811-b90baee60c1f?w=400" },
+    { id: 13, name: "Dr. Farhan Akram", degree: "MS, MCh (Urology)", spec: "Urological Surgeon", hosp: "Nanavati Max", bio: "Expertise in laser stone removal.", rating: "9.3", reviews: "38", fees: "₹1,600", loc: "Mumbai", img: "https://images.unsplash.com/photo-1618498082410-b4aa22193b38?w=400" },
+    { id: 14, name: "Dr. Pallavi Sharma", degree: "MDS (Endodontics)", spec: "Root Canal Specialist", hosp: "Clove Dental", bio: "Focused on painless treatments.", rating: "9.0", reviews: "67", fees: "₹700", loc: "Bangalore", img: "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=400" }
+];
+
+let currentPage = 1;
+const docsPerPage = 5;
+let filteredDocs = [...doctors];
+let activeDocData = null;
+
+function renderDocs() {
+    const container = document.getElementById('docList');
+    const start = (currentPage - 1) * docsPerPage;
+    const end = start + docsPerPage;
+    const paginatedItems = filteredDocs.slice(start, end);
+
+    container.innerHTML = paginatedItems.map(doc => `
+        <div class="doc-profile" id="doc-${doc.id}">
+            <div style="text-align:center">
+                <img src="${doc.img}" class="doc-portrait">
+                <div class="rating-tag">⭐ ${doc.rating}/10 GENUINE RATING</div>
+                <div style="font-size:12px; color:var(--text-sub)">Verified Reviews: ${doc.reviews}</div>
+            </div>
+            <div class="info-content">
+                <div class="doc-header">
+                    <div>
+                        <h3 class="doc-name">${doc.name} <span class="verify-tick">✔</span></h3>
+                        <div class="credentials">${doc.degree}</div>
+                    </div>
+                    <div style="text-align:right">
+                        <div style="font-weight:800; font-size:22px; color:var(--accent)">${doc.fees}</div>
+                        <div style="font-size:11px; text-transform:uppercase; opacity:0.6">Consultation Fee</div>
+                    </div>
+                </div>
+                <p class="doc-bio">${doc.bio}</p>
+                <div class="doc-meta">
+                    <div class="meta-item"><b>Primary Facility</b>${doc.hosp}</div>
+                    <div class="meta-item"><b>Medical Faculty</b>${doc.spec}</div>
+                    <div class="meta-item"><b>Clinic Address</b>${doc.loc}</div>
+                    <div class="meta-item"><b>Response Time</b>~ 15 Mins</div>
+                </div>
+                <div style="margin-top:30px; display:flex; gap:15px;">
+                    <button class="book-btn" id="btn-${doc.id}" onclick="openModal(${doc.id}, '${doc.name}')">Request Appointment</button>
+                    <button style="flex:0.4; background:none; border:1px solid var(--border); border-radius:14px; color:var(--text-main); font-weight:700; cursor:pointer;">Full Profile</button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+    renderPagination();
+}
+
+function renderPagination() {
+    const pg = document.getElementById('pagination');
+    const pageCount = Math.ceil(filteredDocs.length / docsPerPage);
+    pg.innerHTML = '';
+    for (let i = 1; i <= pageCount; i++) {
+        const btn = document.createElement('button');
+        btn.innerText = i;
+        btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+        btn.onclick = () => { currentPage = i; renderDocs(); window.scrollTo(0, 400); };
+        pg.appendChild(btn);
+    }
+}
+
+function handleSearch() {
+    const q = document.getElementById('searchInput').value.toLowerCase();
+    filteredDocs = doctors.filter(d => 
+        d.name.toLowerCase().includes(q) || d.spec.toLowerCase().includes(q) || 
+        d.loc.toLowerCase().includes(q) || d.hosp.toLowerCase().includes(q) || d.bio.toLowerCase().includes(q)
+    );
+    currentPage = 1;
+    renderDocs();
+}
+
+function openModal(id, name) {
+    const doc = doctors.find(d => d.id === id);
+    activeDocData = { id, name, hosp: doc.hosp, loc: doc.loc };
+    document.getElementById('modalName').innerText = "Schedule with " + name;
+    document.getElementById('bookingModal').style.display = 'block';
+}
+
+function closeModal() { document.getElementById('bookingModal').style.display = 'none'; }
+
+function finalizeBooking() {
+    const dVal = document.getElementById('appDate').value;
+    const tVal = document.getElementById('appTime').value;
+    if(!dVal) { alert("Please select a date first!"); return; }
+
+    closeModal();
+    document.getElementById('successSlip').style.display = 'block';
+    document.getElementById('slipDoc').innerText = activeDocData.name;
+    document.getElementById('slipTime').innerText = dVal + " at " + tVal;
+
+    // Show Professional Custom Confirm
+    document.getElementById('popupHosp').innerText = activeDocData.hosp;
+    setTimeout(() => {
+        document.getElementById('customConfirmModal').style.display = 'flex';
+    }, 800);
+}
+
+function closeConfirmModal() { document.getElementById('customConfirmModal').style.display = 'none'; }
+
+function goToMedCab() {
+    window.location.href = `medcab.html?hosp=${encodeURIComponent(activeDocData.hosp)}&loc=${encodeURIComponent(activeDocData.loc)}`;
+}
+
+function scrollToDoctor() {
+    const el = document.getElementById(`doc-${activeDocData.id}`);
+    if(el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function toggleTheme() {
+    const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', current);
+    localStorage.setItem('theme', current);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');
+    renderDocs();
+});
+</script>
+</body>
+</html>

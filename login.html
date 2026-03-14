@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.css">
+    <title>Login | MedConnect Healthcare</title>
+</head>
+<body>
+
+<nav class="login-nav">
+    <div class="logo-text">Med<span>Connect</span></div>
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <span id="theme-text">Dark Mode</span>
+        <div class="toggle-icon" id="theme-icon">🌙</div>
+    </div>
+</nav>
+
+<div class="login-wrapper">
+    <div class="login-container fade-in">
+        
+        <div id="login-header" class="header-section">
+            <div class="brand-badge">Welcome Back</div>
+            <h1>Access Your Portal</h1>
+            <p>Please select your profile type to continue</p>
+        </div>
+
+        <div id="login-role-selection" class="role-grid">
+            <div class="role-card" onclick="setLoginRole('patient')">
+                <div class="role-icon">👤</div>
+                <span class="role-name">Patient</span>
+                <p class="role-desc">Health Records</p>
+            </div>
+            <div class="role-card" onclick="setLoginRole('doctor')">
+                <div class="role-icon">🩺</div>
+                <span class="role-name">Doctor</span>
+                <p class="role-desc">Appointments</p>
+            </div>
+            <div class="role-card" onclick="setLoginRole('hospital')">
+                <div class="role-icon">🏢</div>
+                <span class="role-name">Hospital</span>
+                <p class="role-desc">Facility Mgmt</p>
+            </div>
+        </div>
+
+        <form id="login-form" style="display: none;" onsubmit="handleLogin(event)" class="fade-in-form">
+            <div class="form-header">
+                <h3 id="login-title">Login</h3>
+                <p>Secure access to your medical dashboard</p>
+            </div>
+            
+            <div class="input-group">
+                <label>Email Address</label>
+                <input type="email" id="username" placeholder="name@example.com" required>
+            </div>
+            
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="••••••••" required>
+            </div>
+            
+            <button type="submit" class="btn-primary">Sign In Securely</button>
+
+            <div class="footer-links">
+                <p>New to MedConnect? <a href="register.html">Create Account</a></p>
+                <button type="button" class="btn-link" onclick="location.reload()">← Back to Selection</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    let selectedRole = '';
+
+    function setLoginRole(role) {
+        selectedRole = role;
+        document.getElementById('login-role-selection').style.display = 'none';
+        document.getElementById('login-header').style.display = 'none';
+        
+        const form = document.getElementById('login-form');
+        form.style.display = 'block';
+        document.getElementById('login-title').innerText = role.charAt(0).toUpperCase() + role.slice(1) + " Login";
+    }
+
+    function handleLogin(e) {
+        e.preventDefault();
+        // Redirect logic based on role
+        if(selectedRole === 'patient') window.location.href = "index.html";
+        else if(selectedRole === 'doctor') window.location.href = "doctor-dash.html";
+        else if(selectedRole === 'hospital') window.location.href = "hospital-dash.html";
+    }
+
+    // Shared Theme Logic
+    function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+        const text = document.getElementById('theme-text');
+        const icon = document.getElementById('theme-icon');
+        
+        if(theme === 'dark') {
+            text.innerText = "Light Mode";
+            icon.innerText = "☀️";
+        } else {
+            text.innerText = "Dark Mode";
+            icon.innerText = "🌙";
+        }
+    }
+
+    function toggleTheme() {
+        const current = localStorage.getItem('theme') || 'light';
+        applyTheme(current === 'light' ? 'dark' : 'light');
+    }
+
+    window.onload = () => {
+        applyTheme(localStorage.getItem('theme') || 'light');
+    }
+</script>
+
+</body>
+</html>

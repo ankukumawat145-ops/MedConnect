@@ -1,0 +1,606 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedConnect - Smart Healthcare</title>
+
+<style>
+/* GLOBAL */
+body{
+margin:0;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+background:#f2fbff;
+color:#1b2b34;
+line-height:1.6;
+}
+
+/* smooth animation */
+*{
+transition: all 0.3s ease;
+}
+
+/* NAVBAR */
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 60px;
+background:white;
+box-shadow:0 4px 20px rgba(0,0,0,0.04);
+position:sticky;
+top:0;
+z-index:100;
+}
+
+.logo{
+font-size:26px;
+font-weight:700;
+color:#1aa6b7;
+}
+
+nav ul{
+display:flex;
+gap:28px;
+list-style:none;
+margin: 0;
+}
+
+nav ul li{
+cursor:pointer;
+font-weight:500;
+}
+
+nav ul li:hover{
+color:#1aa6b7;
+}
+/* Navbar ke links ki line aur color fix karne ke liye */
+nav ul li a {
+    text-decoration: none; /* Isse niche ki line hat jayegi */
+    color: inherit;        /* Isse wahi color rahega jo navbar ka hai */
+    display: block;        /* Isse pura area clickable ho jayega */
+}
+
+nav ul li a:hover {
+    color: #1aa6b7;       /* Hover karne par wahi teal color aayegi */
+}
+h3 a {
+    text-decoration: none; /* Isse niche ki line hat jayegi */
+    color: inherit;        /* Isse wahi color rahega jo navbar ka hai */
+    display: block;        /* Isse pura area clickable ho jayega */
+}
+
+/* Updated Nav Actions Container */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-btn{
+background:#1aa6b7;
+border:none;
+padding:10px 18px;
+color:white;
+border-radius:8px;
+cursor:pointer;
+font-weight: 600;
+}
+
+.nav-btn:hover{
+background:#1593a1;
+}
+
+/* Updated Theme Button Style for Navbar */
+.theme-nav-btn {
+    background: transparent;
+    border: 1px solid #1aa6b7;
+    color: var(--text-color);
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* HERO */
+.hero{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:90px 70px;
+}
+
+.hero-text{
+max-width:600px;
+animation:fadeUp 1s ease;
+}
+
+.hero h1{
+font-size:48px;
+margin-bottom:20px;
+color:#12343b;
+}
+
+.hero p{
+font-size:18px;
+color:#4a6167;
+}
+
+.hero img{
+width:420px;
+animation:float 4s infinite ease-in-out;
+}
+
+/* SEARCH SECTION */
+.search-section{
+margin:40px auto;
+width:95%;
+text-align:center;
+padding:40px;
+border-radius:18px;
+background:linear-gradient(135deg,#1aa6b7,#1f6f8b);
+color:white;
+}
+
+.search-box{
+margin-top:20px;
+display:flex;
+justify-content:center;
+gap:12px;
+}
+
+.search-box input{
+padding:14px;
+width:360px;
+border:none;
+border-radius:10px;
+outline:none;
+}
+
+.search-box button{
+padding:14px 20px;
+border:none;
+background:white;
+color:#1aa6b7;
+border-radius:10px;
+cursor:pointer;
+font-weight:600;
+}
+
+.search-box button:hover{
+transform:scale(1.05);
+}
+
+/* FEATURES */
+.features{
+padding:80px 70px;
+}
+
+.features h2{
+text-align:center;
+margin-bottom:50px;
+font-size:32px;
+}
+
+.feature-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:30px;
+}
+
+.card{
+background:white;
+padding:28px;
+border-radius:16px;
+box-shadow:0 10px 25px rgba(0,0,0,0.05);
+}
+
+.card:hover{
+transform:translateY(-8px);
+box-shadow:0 15px 40px rgba(0,0,0,0.08);
+}
+
+.card img{
+width:60px;
+margin-bottom:12px;
+}
+
+.card h3{
+margin-bottom:10px;
+}
+
+/* PLATFORM INFO */
+.platform{
+background:#e9f9ff;
+padding:70px;
+text-align:center;
+}
+
+.platform p{
+max-width:800px;
+margin:auto;
+font-size:18px;
+color:#425b63;
+}
+
+/* STATS */
+.stats{
+display:flex;
+justify-content:space-around;
+padding:60px;
+background:white;
+}
+
+.stats div{
+text-align:center;
+}
+
+.stats h3{
+font-size:34px;
+color:#1aa6b7;
+}
+
+/* ABOUT */
+.about{
+display:flex;
+align-items:center;
+gap:40px;
+padding:80px 70px;
+}
+
+.about img{
+width:420px;
+border-radius:14px;
+}
+
+.about-text{
+max-width:600px;
+}
+
+.about-text h2{
+font-size:30px;
+}
+
+/* FOOTER */
+footer{
+background:#0b1f3a;
+color:white;
+padding:50px 10%;
+margin-top:60px;
+}
+
+.footer-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:30px;
+}
+
+footer p{
+opacity:0.7;
+}
+
+.copy{
+text-align:center;
+margin-top:30px;
+opacity:0.6;
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp{
+from{ opacity:0; transform:translateY(40px); }
+to{ opacity:1; transform:translateY(0); }
+}
+
+@keyframes float{
+0%{transform:translateY(0px);}
+50%{transform:translateY(-12px);}
+100%{transform:translateY(0px);}
+}
+
+/* DARK MODE LOGIC */
+:root {
+    --bg-color: #f2fbff;
+    --text-color: #1b2b34;
+    --card-bg: white;
+    --nav-bg: white;
+    --hero-bg: #12343b;
+    --sub-text: #4a6167;
+}
+
+[data-theme="dark"] {
+    --bg-color: #0b151a;
+    --text-color: #e0f2f7;
+    --card-bg: #16262e;
+    --nav-bg: #0f1c23;
+    --hero-bg: #050a0c;
+    --sub-text: #a0b2b7;
+}
+
+body { background: var(--bg-color) !important; color: var(--text-color) !important; }
+nav { background: var(--nav-bg) !important; }
+.card, .stats { background: var(--card-bg) !important; color: var(--text-color) !important; }
+.hero h1, .about-text h2 { color: var(--text-color) !important; }
+.hero p, .about-text p { color: var(--sub-text) !important; }
+.platform { background: var(--nav-bg) !important; }
+
+/* Chatbot Style */
+.chatbot-wrapper {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.chatbot-icon {
+    width: 70px; height: 70px;
+    background: white; border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    box-shadow: 0 10px 25px rgba(26, 166, 183, 0.3);
+    border: 2px solid #1aa6b7;
+    animation: bloom 2s infinite ease-in-out;
+}
+@keyframes bloom {
+    0% { box-shadow: 0 0 0 0 rgba(26, 166, 183, 0.5); }
+    70% { box-shadow: 0 0 0 20px rgba(26, 166, 183, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(26, 166, 183, 0); }
+}
+
+/* Footer specific theme colors */
+    .site-footer {
+        background-color: var(--card); /* Light mein white, Dark mein dark-blue/black */
+        border-top: 1px solid var(--border);
+        padding: 80px 0 40px 0;
+        margin-top: 100px;
+        transition: 0.3s ease;
+        color: var(--text-main);
+    }
+    .footer-link {
+        color: var(--text-sub);
+        text-decoration: none;
+        transition: 0.2s;
+        cursor: pointer;
+    }
+    .footer-link:hover {
+        color: var(--accent);
+    }
+    .footer-heading {
+        color: var(--accent);
+        font-size: 14px;
+        letter-spacing: 1.2px;
+        margin-bottom: 25px;
+        text-transform: uppercase;
+        font-weight: 800;
+    }
+</style>
+</head>
+
+<body>
+
+<nav>
+<div class="logo">MedConnect</div>
+
+<ul>
+<li>Home</li>
+
+<li><a href="doctor.html">Doctors</a></li>
+<li>Medicines</li>
+<li><a href="lab_test.html">Lab Tests</a></li>
+<li><a href="health_record.html">Health Records</a></li>
+<li><a href="blood_bank.html">Blood Bank</a></li>
+<li><a href="support.html">Support</a></li>
+<li><a href="faq.html">FAQ</a></li>
+</ul>
+
+<div class="nav-actions">
+    <button class="nav-btn" onclick="window.location.href='login.html'">Sign In</button>
+    
+    <button class="theme-nav-btn" onclick="toggleTheme()">
+        <span id="theme-icon">🌙</span>
+        <span id="theme-text">Dark</span>
+    </button>
+</div>
+</nav>
+
+<section class="hero">
+<div class="hero-text">
+<h1>Healthcare Made Simple, Fast and Accessible</h1>
+<p>MedConnect is a modern digital healthcare platform designed to help people easily connect with doctors, hospitals, pharmacies and labs. Our goal is to simplify healthcare and make trusted medical services available anytime and anywhere.</p>
+<p>With advanced technology, smart search and AI powered tools, users can manage their health in a smarter way.</p>
+</div>
+<img src="https://images.unsplash.com/photo-1584515933487-779824d29309">
+</section>
+
+<section class="search-section">
+<h2>Find Doctors, Hospitals or Medicines Near You</h2>
+<p>Search trusted healthcare providers instantly</p>
+<div class="search-box">
+<input type="text" placeholder="Search healthcare services">
+<button>Search</button>
+</div>
+</section>
+
+<section class="features">
+<h2>Services We Provide</h2>
+<div class="feature-grid">
+<div class="card">
+<img src="https://img.icons8.com/fluency/96/doctor-male.png">
+<h3><a href="doctor.html">Doctor Consultation</a></h3>
+<p>Connect with experienced doctors through online consultation or book a visit at nearby hospitals easily.</p>
+</div>
+<div class="card">
+<img src="https://img.icons8.com/fluency/96/pill.png">
+<h3>Medicine Delivery</h3>
+<p>Order genuine medicines online and get them delivered to your home quickly and safely.</p>
+</div>
+<div class="card">
+<img src="https://img.icons8.com/fluency/96/test-tube.png">
+<h3>Lab Test Booking</h3>
+<p>Book diagnostic tests from trusted laboratories with home sample collection options.</p>
+</div>
+<div class="card">
+<img src="https://img.icons8.com/fluency/96/medical-history.png">
+<h3>Digital Health Records</h3>
+<p>Store and manage prescriptions, reports and health history securely in one place.</p>
+</div>
+<div class="card">
+<img src="https://img.icons8.com/fluency/96/artificial-intelligence.png">
+<h3><a href="2.html">AI Health Assistant</a><h3>
+<p>Get smart guidance based on symptoms and basic health analysis using intelligent systems.</p>
+</div>
+<div class="card">
+<img src="https://img.icons8.com/fluency/96/ambulance.png">
+<h3>Emergency Support</h3>
+<p>Quick access to emergency services and nearby hospitals during urgent situations.</p>
+</div>
+</div>
+</section>
+
+<section class="platform">
+<h2>Building the Future of Digital Healthcare</h2>
+<p>MedConnect is built with the vision to connect patients, doctors, pharmacies and hospitals into a single digital ecosystem. Healthcare should be simple, reliable and accessible to everyone. We focus on user trust, safety, and smooth experience.</p>
+</section>
+
+<section class="stats">
+<div><h3>6</h3><p>Doctors Available</p></div>
+<div><h3>1</h3><p>Users</p></div>
+<div><h3>3+</h3><p>Hospitals Connected</p></div>
+<div><h3>24/7</h3><p>Healthcare Access</p></div>
+</section>
+
+<section class="about">
+<img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef">
+<div class="about-text">
+<h2>Our Mission</h2>
+<p>We want to improve healthcare accessibility using technology. Many people struggle to find the right doctor or medical help on time. MedConnect aims to solve that problem by building a reliable digital platform that works everywhere.</p>
+<p>This platform is designed carefully to keep the interface clean, friendly and simple so users of all ages can easily use it.</p>
+</div>
+</section>
+
+<footer class="site-footer">
+    <div style="max-width: 1300px; margin: 0 auto; padding: 0 40px;">
+        
+        <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 60px;">
+            
+            <div>
+                <div style="font-size: 30px; font-weight: 800; color: var(--accent); margin-bottom: 20px;">MedConnect™</div>
+                <p style="color: var(--text-sub); font-size: 15px; line-height: 1.8; margin-bottom: 25px;">
+                    India's premier healthcare bridge. We simplify complex medical journeys through technology and 24/7 empathetic support.
+                </p>
+                <div style="display: flex; gap: 10px;">
+                    <span style="font-size: 10px; font-weight: 800; color: var(--text-sub); border: 1px solid var(--border); padding: 5px 10px; border-radius: 6px;">ISO 27001</span>
+                    <span style="font-size: 10px; font-weight: 800; color: var(--text-sub); border: 1px solid var(--border); padding: 5px 10px; border-radius: 6px;">HIPAA COMPLIANT</span>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="footer-heading">Services</h4>
+                <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2.5;">
+                    <li><a class="footer-link">Find Specialists</a></li>
+                    <li><a class="footer-link">Emergency MedCab</a></li>
+                    <li><a class="footer-link">Home Nursing</a></li>
+                    <li><a class="footer-link">Lab Tests & MRI</a></li>
+                    <li><a class="footer-link">Insurance Claims</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footer-heading">Corporate</h4>
+                <ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2.5;">
+                    <li><a class="footer-link">About Us</a></li>
+                    <li><a class="footer-link">Privacy & Data</a></li>
+                    <li><a class="footer-link">Terms of Service</a></li>
+                    <li><a class="footer-link">Refund Policy</a></li>
+                    <li><a class="footer-link">Careers</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footer-heading">Get the App</h4>
+                
+                <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px;">
+                    <div style="background: #000000; color: #ffffff; padding: 10px 18px; border-radius: 12px; display: flex; align-items: center; gap: 12px; cursor: pointer; width: 180px; border: 1px solid #333;">
+                        <span style="font-size: 24px;"></span>
+                        <div style="line-height: 1;">
+                            <span style="font-size: 10px; display: block; opacity: 0.8;">Download on the</span>
+                            <span style="font-size: 15px; font-weight: 700;">App Store</span>
+                        </div>
+                    </div>
+                    <div style="background: #000000; color: #ffffff; padding: 10px 18px; border-radius: 12px; display: flex; align-items: center; gap: 12px; cursor: pointer; width: 180px; border: 1px solid #333;">
+                        <span style="font-size: 20px;">🌐</span>
+                        <div style="line-height: 1;">
+                            <span style="font-size: 10px; display: block; opacity: 0.8;">Get it on</span>
+                            <span style="font-size: 15px; font-weight: 700;">Google Play</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 20px;">
+                    <a href="#" style="text-decoration: none; color: #1DA1F2; font-size: 18px; font-weight: 800;">X</a>
+                    <a href="#" style="text-decoration: none; color: #E1306C; font-size: 18px; font-weight: 800;">IG</a>
+                    <a href="#" style="text-decoration: none; color: #0077B5; font-size: 18px; font-weight: 800;">IN</a>
+                    <a href="#" style="text-decoration: none; color: #FF0000; font-size: 18px; font-weight: 800;">YT</a>
+                </div>
+            </div>
+        </div>
+
+        <div style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 25px 0; margin-bottom: 30px; text-align: center;">
+            <p style="font-size: 12px; color: var(--text-sub); letter-spacing: 0.8px; margin: 0; font-weight: 600;">
+                OPERATIONAL IN: MUMBAI • DELHI NCR • BENGALURU • HYDERABAD • CHENNAI • KOLKATA • PUNE • JAIPUR • LUCKNOW
+            </p>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; color: var(--text-sub); font-size: 13px;">
+            <div>© 2026 MedConnect Healthcare Private Limited.</div>
+            <div style="display: flex; gap: 25px;">
+                <span class="footer-link" style="font-size: 12px;">Cyber Security</span>
+                <span class="footer-link" style="font-size: 12px;">Sitemap</span>
+                <span class="footer-link" style="font-size: 12px;">Patient Rights</span>
+            </div>
+        </div>
+    </div>
+</footer>
+<div class="chatbot-wrapper" onclick="openChat()">
+    <div class="chatbot-icon">
+        <img src="https://img.icons8.com/fluency/96/artificial-intelligence.png" alt="AI Chat" width="45">
+    </div>
+</div>
+
+<script>
+// THEME SYNC LOGIC
+function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    const text = document.getElementById('theme-text');
+    const icon = document.getElementById('theme-icon');
+    if(theme === 'dark') {
+        if(text) text.innerText = "Light";
+        if(icon) icon.innerText = "☀️";
+    } else {
+        if(text) text.innerText = "Dark";
+        if(icon) icon.innerText = "🌙";
+    }
+}
+
+function toggleTheme() {
+    const current = localStorage.getItem('theme') || 'light';
+    applyTheme(current === 'light' ? 'dark' : 'light');
+}
+
+function openChat() {
+    window.location.href = '2.html';
+}
+
+// Initial Theme Check
+document.addEventListener('DOMContentLoaded', () => {
+    applyTheme(localStorage.getItem('theme') || 'light');
+});
+</script>
+
+</body>
+</html> -->

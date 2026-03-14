@@ -1,0 +1,216 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* Light Theme */
+    --bg-body: #f4f9fc;
+    --bg-card: #ffffff;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --accent: #1aa6b7;
+    --accent-hover: #1593a1;
+    --border: #e2e8f0;
+    --input-bg: #f8fafc;
+}
+
+[data-theme="dark"] {
+    /* Dark Oceanic Theme */
+    --bg-body: #05161d;
+    --bg-card: #0a242d;
+    --text-main: #e0f2f7;
+    --text-muted: #94a3b8;
+    --accent: #26d0ce;
+    --accent-hover: #1aa6b7;
+    --border: #163a45;
+    --input-bg: #0d2e39;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    transition: all 0.3s ease;
+    min-height: 100vh;
+}
+
+/* NAVBAR */
+.reg-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.logo span { color: var(--text-main); }
+
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 15px;
+    border-radius: 20px;
+    background: var(--input-bg);
+}
+
+/* WRAPPER & CONTAINER */
+.reg-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+}
+
+.reg-container {
+    background: var(--bg-card);
+    width: 100%;
+    max-width: 550px;
+    padding: 50px;
+    border-radius: 28px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+    border: 1px solid var(--border);
+}
+
+.brand-badge {
+    display: inline-block;
+    background: rgba(26, 166, 187, 0.1);
+    color: var(--accent);
+    padding: 5px 15px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.reg-header h2 {
+    font-size: 32px;
+    margin: 0 0 10px 0;
+}
+
+.reg-header p {
+    color: var(--text-muted);
+    margin-bottom: 40px;
+}
+
+/* ROLE CARDS */
+.role-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.role-card {
+    background: var(--input-bg);
+    padding: 25px 15px;
+    border-radius: 20px;
+    text-align: center;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: 0.3s;
+}
+
+.role-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-5px);
+    background: var(--bg-card);
+}
+
+.role-card .icon { font-size: 30px; margin-bottom: 10px; }
+.role-name { display: block; font-weight: 600; margin-bottom: 5px; }
+.role-desc { font-size: 10px; color: var(--text-muted); line-height: 1.2; }
+
+/* FORM ELEMENTS */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-main);
+}
+
+.input-group input, .input-group textarea {
+    width: 100%;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1.5px solid var(--border);
+    background: var(--input-bg);
+    color: var(--text-main);
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(26, 166, 187, 0.1);
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+/* BUTTONS */
+.btn-primary-reg {
+    width: 100%;
+    padding: 18px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 20px;
+}
+
+.btn-primary-reg:hover {
+    background: var(--accent-hover);
+    box-shadow: 0 8px 20px rgba(26, 166, 187, 0.3);
+}
+
+.btn-link {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    width: 100%;
+    margin-top: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.login-footer { margin-top: 30px; font-size: 14px; color: var(--text-muted); }
+.login-footer a { color: var(--accent); text-decoration: none; font-weight: 700; }
+
+/* ANIMATION */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-form { animation: fadeIn 0.6s ease-out; }
+
+@media (max-width: 600px) {
+    .role-grid { grid-template-columns: 1fr; }
+    .reg-container { padding: 30px; }
+}

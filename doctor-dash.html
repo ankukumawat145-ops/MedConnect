@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <title>Doctor Portal</title>
+</head>
+<body class="dash-body">
+    <nav class="dash-nav" style="background: #28a745;">
+        <h2>MedConnect | Doctor Cabin</h2>
+        <a href="login.html">Logout</a>
+    </nav>
+    <div class="main-container">
+        <div class="card">
+            <h3>📅 Appointments for Today</h3>
+            <div class="appointment-list">
+                <div class="apt-item"><span>10:00 AM</span> <b>Rahul Singh</b> (Fever) <button class="btn-sm">Check</button></div>
+                <div class="apt-item"><span>11:30 AM</span> <b>Priya Verma</b> (Checkup) <button class="btn-sm">Check</button></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+    .site-footer {
+        background-color: var(--card); /* Light mein white, Dark mein dark-blue/black */
+        border-top: 1px solid var(--border);
+        padding: 80px 0 40px 0;
+        margin-top: 100px;
+        transition: 0.3s ease;
+        color: var(--text-main);
+    }
+    .footer-link {
+        color: var(--text-sub);
+        text-decoration: none;
+        transition: 0.2s;
+        cursor: pointer;
+    }
+    .footer-link:hover {
+        color: var(--accent);
+    }
+    .footer-heading {
+        color: var(--accent);
+        font-size: 14px;
+        letter-spacing: 1.2px;
+        margin-bottom: 25px;
+        text-transform: uppercase;
+        font-weight: 800;
+    }
